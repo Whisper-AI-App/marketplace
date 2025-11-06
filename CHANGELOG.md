@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.2.0...v1.3.0) (2025-11-06)
+
+### Features
+
+* `postinstall` step to generate `dist/` when consuming via node ([3d85db2](https://github.com/Ava-Technologies-Org/whisper-llm-cards/commit/3d85db2f58028bbd65540751c526409078e57b3f))
+
 ## [1.2.0](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.1.0...v1.2.0) (2025-11-06)
 
 ### Features
