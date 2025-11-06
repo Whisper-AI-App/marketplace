@@ -26,7 +26,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 
 	cards: {
 		"llama-3.2-1b-instruct-q4_0": {
-			name: "AI Chat (Llama 3.2 1B I Q4_0)",
+			name: "Whisper AI Chat (Ll 3.2 1B I Q4_0)",
 			type: "gguf",
 			sourceUrl:
 				"https://huggingface.co/unsloth/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_0.gguf",
