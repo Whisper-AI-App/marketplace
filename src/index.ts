@@ -49,11 +49,12 @@ export async function getLatestConfig(
 	const data = await response.json();
 
 	// Transform the JSON structure to match WhisperLLMCardsJSON format
+	const cardsData = data.cards;
 	return {
 		version: data.version,
 		recommendedCard: data.recommendedCard
 			? data.recommendedCard
-			: Object.keys(data.models)[0], // Use first model as recommended if not specified
-		cards: data.models,
+			: Object.keys(cardsData)[0], // Use first model as recommended if not specified
+		cards: cardsData,
 	};
 }

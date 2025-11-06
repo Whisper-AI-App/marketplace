@@ -79,7 +79,7 @@ test("getLatestConfig returns a promise", (t) => {
 });
 
 // Skip network tests by default - enable with: ava --match '*network*'
-test.skip("getLatestConfig fetches and returns valid config (network)", async (t) => {
+test("getLatestConfig fetches and returns valid config (network)", async (t) => {
 	const config = await getLatestConfig();
 
 	t.truthy(config);
@@ -92,7 +92,7 @@ test.skip("getLatestConfig fetches and returns valid config (network)", async (t
 	t.is(typeof config.cards, "object");
 });
 
-test.skip("getLatestConfig returns cards with valid structure (network)", async (t) => {
+test("getLatestConfig returns cards with valid structure (network)", async (t) => {
 	const config = await getLatestConfig();
 
 	t.true(Object.keys(config.cards).length > 0);
@@ -112,7 +112,7 @@ test.skip("getLatestConfig returns cards with valid structure (network)", async 
 	}
 });
 
-test.skip("getLatestConfig recommendedCard exists in returned cards (network)", async (t) => {
+test("getLatestConfig recommendedCard exists in returned cards (network)", async (t) => {
 	const config = await getLatestConfig();
 
 	t.truthy(config.cards[config.recommendedCard]);
@@ -148,7 +148,7 @@ test("getLatestConfig uses first model as recommendedCard if not specified", asy
 			ok: true,
 			json: async () => ({
 				version: "1.0.0",
-				models: {
+				cards: {
 					"model-1": {
 						name: "Model 1",
 						type: "gguf",
