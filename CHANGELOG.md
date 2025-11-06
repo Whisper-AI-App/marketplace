@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.1.0...v1.2.0) (2025-11-06)
+
+### Features
+
+* implement version management for resolving latest cards.json URL, with new versions.json to track channels, and updated release process ([9f36061](https://github.com/Ava-Technologies-Org/whisper-llm-cards/commit/9f360617e8d0f83e9ca292e48aee6c9b0028b703))
+
 ## [1.1.0](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.0.0...v1.1.0) (2025-11-06)
 
 ### Features
