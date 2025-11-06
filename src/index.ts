@@ -70,14 +70,14 @@ async function resolveLatestVersion(
 		const minorChannel = `${major}.${minor}`;
 		const majorChannel = `${major}`;
 
-		// Try minor channel first (e.g., "1.0" gets latest 1.0.x)
-		if (versions.channels[minorChannel]) {
-			return versions.channels[minorChannel];
-		}
-
-		// Fallback to major channel (e.g., "1" gets latest 1.x.x)
+		// Try major channel (e.g., "1" gets latest 1.x.x)
 		if (versions.channels[majorChannel]) {
 			return versions.channels[majorChannel];
+		}
+
+		// fallback to minor channel (e.g., "1.0" gets latest 1.0.x)
+		if (versions.channels[minorChannel]) {
+			return versions.channels[minorChannel];
 		}
 
 		// Fallback to current VERSION if channel not found
