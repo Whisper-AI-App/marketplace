@@ -1,4 +1,4 @@
-# LLMs used in the Whisper App
+# LLM distribution to Whisper App
 
-How we quickly and publicly distribute recommended models to our Whisper App.
+How we quickly and publicly distribute recommended LLMs to our Whisper App.
 
