@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.0.0...v1.1.0) (2025-11-06)
+
+### Features
+
+* show latest version tag on README.md for developer convenience ([009b48e](https://github.com/Ava-Technologies-Org/whisper-llm-cards/commit/009b48e7f61b7258db66bd648f940c1c32a9c033))
+
 ## 1.0.0 (2025-11-06)
 
 ### Features
