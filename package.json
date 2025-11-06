@@ -12,7 +12,12 @@
 		"./cards.json": "./dist/cards.json"
 	},
 	"files": [
-		"dist"
+		"dist",
+		"src",
+		"scripts",
+		"tsconfig.json",
+		"types.d.ts",
+		"cards.json"
 	],
 	"scripts": {
 		"build": "tsx scripts/generate-version.ts && tsx scripts/generate-json.ts && tsc && tsx scripts/build.ts",
