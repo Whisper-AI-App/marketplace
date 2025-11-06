@@ -36,7 +36,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 };
 
 export async function getLatestConfig(
-	latestConfigUrl: string = "https://raw.githubusercontent.com/Ava-Technologies-Org/whisper-llm-cards/refs/heads/main/cards.json",
+	latestConfigUrl: string = "https://avatechnologies.org/whisper-llm-cards/refs/heads/main/cards.json",
 ): Promise<WhisperLLMCardsJSON> {
 	const response = await fetch(latestConfigUrl);
 
