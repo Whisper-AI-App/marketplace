@@ -1,3 +1,9 @@
+## [1.7.2](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.7.1...v1.7.2) (2025-11-10)
+
+### Bug Fixes
+
+* not a real update ([ab08854](https://github.com/Ava-Technologies-Org/whisper-llm-cards/commit/ab08854536aea503f2dede0fd8cad50d8f6f59df))
+
 ## [1.7.1](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.7.0...v1.7.1) (2025-11-10)
 
 ### Bug Fixes
