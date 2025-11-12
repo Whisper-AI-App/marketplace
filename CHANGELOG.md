@@ -1,3 +1,18 @@
+## [1.9.0](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.8.0...v1.9.0) (2025-11-12)
+
+### ⚠ BREAKING CHANGES
+
+* adjusted commit message format for triggering major version bump (test)
+
+### Features
+
+* adjusted commit message format for triggering major version bump (test) ([33981da](https://github.com/Ava-Technologies-Org/whisper-llm-cards/commit/33981da303106dd6b5c605da0533e3590ba477ae))
+
+### Bug Fixes
+
+* add parser options for note keywords in release configuration ([e6af295](https://github.com/Ava-Technologies-Org/whisper-llm-cards/commit/e6af2955f8747dbce17f9c82b322173d5658bac3))
+* cleaner tests, split out into seperate files grouped by topic ([15f1a22](https://github.com/Ava-Technologies-Org/whisper-llm-cards/commit/15f1a22373a87cb506c7bb4a25eb8a24a979d81c))
+
 ## [1.8.0](https://github.com/Ava-Technologies-Org/whisper-llm-cards/compare/v1.7.2...v1.8.0) (2025-11-12)
 
 ### ⚠ BREAKING CHANGES
