@@ -71,9 +71,9 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 			type: "gguf",
 			sourceUrl:
 				"https://huggingface.co/ibm-granite/granite-4.0-1b-GGUF/resolve/main/granite-4.0-1b-Q3_K_M.gguf",
-			sizeGB: 1.56,
-			parametersB: 3,
-			ramGB: 3,
+			sizeGB: 0.86,
+			parametersB: 1,
+			ramGB: 1,
 			systemMessage: {
 				template:
 					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
