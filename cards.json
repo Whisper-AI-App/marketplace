@@ -1,7 +1,21 @@
 {
-    "version": "3.0.0",
-    "recommendedCard": "granite-4.0-h-micro-GGUF",
+    "version": "3.1.0",
+    "recommendedCard": "granite-4.0-1b-GGUF",
     "cards": {
+        "granite-4.0-1b-GGUF": {
+            "name": "Whisper AI Chat (Grnt 4.0 1B Q4_K_M)",
+            "type": "gguf",
+            "sourceUrl": "https://huggingface.co/ibm-granite/granite-4.0-1b-GGUF/resolve/main/granite-4.0-1b-Q3_K_M.gguf",
+            "sizeGB": 1.56,
+            "parametersB": 3,
+            "ramGB": 3,
+            "systemMessage": {
+                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+                "defaultTemplateValues": {
+                    "date_time_string": "2025"
+                }
+            }
+        },
         "granite-4.0-h-micro-GGUF": {
             "name": "Whisper AI Chat (Grnt 4.0 H 3B Micro Q3_K_M)",
             "type": "gguf",
