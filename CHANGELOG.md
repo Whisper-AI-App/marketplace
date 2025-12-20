@@ -1,3 +1,14 @@
+## [3.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v2.0.1...v3.0.0) (2025-12-15)
+
+### ⚠ BREAKING CHANGES
+
+* new recommended AI model for the next app release
+
+### Features
+
+* new recommended model `granite-4.0-h-micro-GGUF` ([86ab96c](https://github.com/Whisper-AI-App/marketplace/commit/86ab96c80de4f4e9829791dd5dcc3004b4af205e))
+* refactor repositoryUrl ([37ffcd6](https://github.com/Whisper-AI-App/marketplace/commit/37ffcd6d77255a3a361dcb88462413408edb9662))
+
 ## [2.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v2.0.0...v2.0.1) (2025-11-12)
 
 ### Bug Fixes
