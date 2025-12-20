@@ -1,3 +1,9 @@
+## [3.1.0](https://github.com/Whisper-AI-App/marketplace/compare/v3.0.0...v3.1.0) (2025-12-20)
+
+### Features
+
+* update recommended model to `granite-4.0-1b-GGUF` and add new card details ([aa2074c](https://github.com/Whisper-AI-App/marketplace/commit/aa2074c8389695982f813ad9232f5b7b0589e023))
+
 ## [3.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v2.0.1...v3.0.0) (2025-12-15)
 
 ### ⚠ BREAKING CHANGES
