@@ -1,6 +1,6 @@
 {
-    "version": "3.1.1",
-    "recommendedCard": "granite-4.0-1b-GGUF",
+    "version": "3.1.2",
+    "recommendedCard": "granite-4.0-h-micro-GGUF",
     "cards": {
         "granite-4.0-1b-GGUF": {
             "name": "Whisper AI Chat (Grnt 4.0 1B Q4_K_M)",

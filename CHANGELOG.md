@@ -1,3 +1,9 @@
+## [3.1.2](https://github.com/Whisper-AI-App/marketplace/compare/v3.1.1...v3.1.2) (2025-12-20)
+
+### Bug Fixes
+
+* update recommendedCard to `granite-4.0-h-micro-GGUF` ([203df35](https://github.com/Whisper-AI-App/marketplace/commit/203df35ac7b34591db2479d7a3e509b3204a9d68))
+
 ## [3.1.1](https://github.com/Whisper-AI-App/marketplace/compare/v3.1.0...v3.1.1) (2025-12-20)
 
 ### Bug Fixes
