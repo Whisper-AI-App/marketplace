@@ -1,3 +1,9 @@
+## [4.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.0...v4.0.1) (2026-01-09)
+
+### Bug Fixes
+
+* change `recommendModelCard` to handle optional RAM parameter (RAM number might not always be available) ([b93f117](https://github.com/Whisper-AI-App/marketplace/commit/b93f117ec6b00f16d2d21c1f27e04c7f07592858))
+
 ## [4.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v3.1.2...v4.0.0) (2026-01-09)
 
 ### ⚠ BREAKING CHANGES
