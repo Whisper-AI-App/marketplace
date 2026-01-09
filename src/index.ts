@@ -24,7 +24,7 @@ export interface LLMCardCollection {
 
 export interface WhisperLLMCardsJSON {
 	version: string;
-	recommendedCard: string;
+	defaultRecommendedCard: string;
 	cards: LLMCardCollection;
 }
 
@@ -63,7 +63,7 @@ export function processSystemMessage(
 export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 	version: VERSION,
 
-	recommendedCard: "granite-4.0-h-micro-GGUF",
+	defaultRecommendedCard: "granite-4.0-h-micro-GGUF",
 
 	cards: {
 		"granite-4.0-1b-GGUF": {
@@ -105,6 +105,32 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 interface VersionsJSON {
 	latest: string;
 	channels: Record<string, string>;
+}
+
+/**
+ * Recommends a model card based on available RAM
+ * @param ramGB - Available RAM in GB
+ * @returns The recommended card name, or defaultRecommendedCard if no suitable match found
+ */
+export function recommendModelCard(ramGB: number): string {
+	let largestCard: { name: string; parametersB: number } | null = null;
+
+	// Iterate through all cards to find the largest one that fits the criteria
+	for (const [cardName, card] of Object.entries(whisperLLMCardsJson.cards)) {
+		// Aproximate if this card meets the RAM requirement
+		// Consume up to 75% of the device RAM, and assume LLM usage is 1.75x of it's parameter size.
+		if (ramGB * 0.75 > card.parametersB * 1.75) {
+			// If this is the first matching card or has more parameters than the current largest
+			if (!largestCard || card.parametersB > largestCard.parametersB) {
+				largestCard = { name: cardName, parametersB: card.parametersB };
+			}
+		}
+	}
+
+	// Return the largest card that fits, or fallback to default
+	return largestCard
+		? largestCard.name
+		: whisperLLMCardsJson.defaultRecommendedCard;
 }
 
 /**
@@ -191,8 +217,8 @@ export async function getLatestConfig(
 	const cardsData = data.cards;
 	return {
 		version: data.version,
-		recommendedCard: data.recommendedCard
-			? data.recommendedCard
+		defaultRecommendedCard: data.defaultRecommendedCard
+			? data.defaultRecommendedCard
 			: Object.keys(cardsData)[0], // Use first model as recommended if not specified
 		cards: cardsData,
 	};
