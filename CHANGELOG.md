@@ -1,3 +1,17 @@
+## [4.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v3.1.2...v4.0.0) (2026-01-09)
+
+### ⚠ BREAKING CHANGES
+
+* new `recommendModelCard(ramGB)` method
+
+### Features
+
+* new `recommendModelCard(ramGB)` method ([19d0207](https://github.com/Whisper-AI-App/marketplace/commit/19d02075c3480bb52d525f0fe12c30d14f111de9))
+
+### Bug Fixes
+
+* broken tests by refactor, and false type error ([bccd7d3](https://github.com/Whisper-AI-App/marketplace/commit/bccd7d39d9d4e7f71ddf0215d8aca3c19b22d3ec))
+
 ## [3.1.2](https://github.com/Whisper-AI-App/marketplace/compare/v3.1.1...v3.1.2) (2025-12-20)
 
 ### Bug Fixes
