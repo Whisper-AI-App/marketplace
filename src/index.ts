@@ -112,17 +112,19 @@ interface VersionsJSON {
  * @param ramGB - Available RAM in GB
  * @returns The recommended card name, or defaultRecommendedCard if no suitable match found
  */
-export function recommendModelCard(ramGB: number): string {
+export function recommendModelCard(ramGB?: number): string {
 	let largestCard: { name: string; parametersB: number } | null = null;
 
-	// Iterate through all cards to find the largest one that fits the criteria
-	for (const [cardName, card] of Object.entries(whisperLLMCardsJson.cards)) {
-		// Aproximate if this card meets the RAM requirement
-		// Consume up to 75% of the device RAM, and assume LLM usage is 1.75x of it's parameter size.
-		if (ramGB * 0.75 > card.parametersB * 1.75) {
-			// If this is the first matching card or has more parameters than the current largest
-			if (!largestCard || card.parametersB > largestCard.parametersB) {
-				largestCard = { name: cardName, parametersB: card.parametersB };
+	if (typeof ramGB === "number") {
+		// Iterate through all cards to find the largest one that fits the criteria
+		for (const [cardName, card] of Object.entries(whisperLLMCardsJson.cards)) {
+			// Aproximate if this card meets the RAM requirement
+			// Consume up to 75% of the device RAM, and assume LLM usage is 1.75x of it's parameter size.
+			if (ramGB * 0.75 > card.parametersB * 1.75) {
+				// If this is the first matching card or has more parameters than the current largest
+				if (!largestCard || card.parametersB > largestCard.parametersB) {
+					largestCard = { name: cardName, parametersB: card.parametersB };
+				}
 			}
 		}
 	}
