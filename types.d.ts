@@ -16,7 +16,7 @@ declare global {
 
 	interface WhisperLLMCardsJSON {
 		version: string;
-		recommendedCard: string;
+		defaultRecommendedCard: string;
 		cards: LLMCardCollection;
 	}
 }

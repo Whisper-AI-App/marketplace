@@ -205,8 +205,8 @@ test("processSystemMessage accepts Message array parameter", (t) => {
 });
 
 test("processSystemMessage works with actual whisperLLMCardsJson data", (t) => {
-	const { cards, recommendedCard } = whisperLLMCardsJson;
-	const card = cards[recommendedCard];
+	const { cards, defaultRecommendedCard } = whisperLLMCardsJson;
+	const card = cards[defaultRecommendedCard];
 	const messages: Message[] = [];
 
 	const result = processSystemMessage(card, messages);

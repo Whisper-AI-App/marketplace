@@ -26,7 +26,7 @@ test("getLatestConfig returns a promise", (t) => {
 		// Mock cards.json
 		return {
 			ok: true,
-			json: async () => ({ version: "1.0.0", recommendedCard: "test", cards: {} }),
+			json: async () => ({ version: "1.0.0", defaultRecommendedCard: "test", cards: {} }),
 		} as Response;
 	};
 
@@ -48,8 +48,8 @@ test("getLatestConfig fetches and returns valid config (network)", async (t) => 
 	t.is(typeof config, "object");
 	t.truthy(config.version);
 	t.is(typeof config.version, "string");
-	t.truthy(config.recommendedCard);
-	t.is(typeof config.recommendedCard, "string");
+	t.truthy(config.defaultRecommendedCard);
+	t.is(typeof config.defaultRecommendedCard, "string");
 	t.truthy(config.cards);
 	t.is(typeof config.cards, "object");
 });
@@ -77,13 +77,13 @@ test("getLatestConfig returns cards with valid structure (network)", async (t) =
 	}
 });
 
-test("getLatestConfig recommendedCard exists in returned cards (network)", async (t) => {
+test("getLatestConfig defaultRecommendedCard exists in returned cards (network)", async (t) => {
 	// Use main branch URL for testing since tags won't exist until after release
 	const config = await getLatestConfig(
 		"https://avatechnologies.org/whisper-llm-cards/refs/heads/main/cards.json",
 	);
 
-	t.truthy(config.cards[config.recommendedCard]);
+	t.truthy(config.cards[config.defaultRecommendedCard]);
 });
 
 test("getLatestConfig handles network errors gracefully", async (t) => {
@@ -109,8 +109,8 @@ test("getLatestConfig handles network errors gracefully", async (t) => {
 	globalThis.fetch = originalFetch;
 });
 
-test("getLatestConfig uses first model as recommendedCard if not specified", async (t) => {
-	// Mock fetch to return data without recommendedCard
+test("getLatestConfig uses first model as defaultRecommendedCard if not specified", async (t) => {
+	// Mock fetch to return data without defaultRecommendedCard
 	const originalFetch = globalThis.fetch;
 	globalThis.fetch = async (url: string | URL | Request) => {
 		const urlString = url.toString();
@@ -129,7 +129,7 @@ test("getLatestConfig uses first model as recommendedCard if not specified", asy
 			} as Response;
 		}
 
-		// Mock cards.json without recommendedCard
+		// Mock cards.json without defaultRecommendedCard
 		return {
 			ok: true,
 			json: async () => ({
@@ -158,7 +158,7 @@ test("getLatestConfig uses first model as recommendedCard if not specified", asy
 
 	const config = await getLatestConfig();
 
-	t.is(config.recommendedCard, "model-1");
+	t.is(config.defaultRecommendedCard, "model-1");
 	t.truthy(config.cards["model-1"]);
 
 	// Restore original fetch

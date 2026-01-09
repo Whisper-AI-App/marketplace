@@ -10,7 +10,7 @@ test("whisperLLMCardsJson has correct structure", (t) => {
 	t.truthy(whisperLLMCardsJson);
 	t.is(typeof whisperLLMCardsJson, "object");
 	t.truthy(whisperLLMCardsJson.version);
-	t.truthy(whisperLLMCardsJson.recommendedCard);
+	t.truthy(whisperLLMCardsJson.defaultRecommendedCard);
 	t.truthy(whisperLLMCardsJson.cards);
 });
 
@@ -18,9 +18,9 @@ test("whisperLLMCardsJson version is a string", (t) => {
 	t.is(typeof whisperLLMCardsJson.version, "string");
 });
 
-test("whisperLLMCardsJson recommendedCard exists in cards", (t) => {
-	const { recommendedCard, cards } = whisperLLMCardsJson;
-	t.truthy(cards[recommendedCard]);
+test("whisperLLMCardsJson defaultRecommendedCard exists in cards", (t) => {
+	const { defaultRecommendedCard, cards } = whisperLLMCardsJson;
+	t.truthy(cards[defaultRecommendedCard]);
 });
 
 test("whisperLLMCardsJson cards is an object", (t) => {
@@ -28,9 +28,9 @@ test("whisperLLMCardsJson cards is an object", (t) => {
 	t.true(Object.keys(whisperLLMCardsJson.cards).length > 0);
 });
 
-test("whisperLLMCardsJson recommended card has correct properties", (t) => {
-	const { recommendedCard, cards } = whisperLLMCardsJson;
-	const card = cards[recommendedCard];
+test("whisperLLMCardsJson default recommended card has correct properties", (t) => {
+	const { defaultRecommendedCard, cards } = whisperLLMCardsJson;
+	const card = cards[defaultRecommendedCard];
 
 	t.truthy(card);
 	t.is(typeof card.name, "string");
