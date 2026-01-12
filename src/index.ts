@@ -63,7 +63,7 @@ export function processSystemMessage(
 export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 	version: VERSION,
 
-	defaultRecommendedCard: "granite-4.0-h-micro-GGUF",
+	defaultRecommendedCard: "granite-4.0-1b-GGUF",
 
 	cards: {
 		"granite-4.0-1b-GGUF": {
