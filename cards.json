@@ -1,5 +1,5 @@
 {
-    "version": "4.0.0",
+    "version": "4.0.1",
     "defaultRecommendedCard": "granite-4.0-h-micro-GGUF",
     "cards": {
         "granite-4.0-1b-GGUF": {
