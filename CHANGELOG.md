@@ -1,3 +1,9 @@
+## [4.0.2](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.1...v4.0.2) (2026-01-12)
+
+### Bug Fixes
+
+* update defaultRecommendedCard to "granite-4.0-1b-GGUF" ([016214c](https://github.com/Whisper-AI-App/marketplace/commit/016214c41f8960496c5627ea4ec6e15996f8b6d4))
+
 ## [4.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.0...v4.0.1) (2026-01-09)
 
 ### Bug Fixes
