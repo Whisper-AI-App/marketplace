@@ -1,3 +1,9 @@
+## [4.0.5](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.4...v4.0.5) (2026-01-13)
+
+### Bug Fixes
+
+* clean up - confirmed that `granite-4.0-1b-GGUF` does not behave reliably on iOS with our current inference runtime ([ebd7935](https://github.com/Whisper-AI-App/marketplace/commit/ebd7935712a79aaf94da084ad4fe417b0b2cf56a))
+
 ## [4.0.4](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.3...v4.0.4) (2026-01-13)
 
 ### Bug Fixes
