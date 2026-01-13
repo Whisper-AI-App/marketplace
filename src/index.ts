@@ -83,23 +83,6 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 			},
 		},
 
-		// "granite-4.0-1b-GGUF": {
-		// 	name: "Whisper AI Chat (Grnt 4.0 1B Q4_K_M)",
-		// 	type: "gguf",
-		// 	sourceUrl:
-		// 		"https://huggingface.co/ibm-granite/granite-4.0-1b-GGUF/resolve/main/granite-4.0-1b-Q3_K_M.gguf",
-		// 	sizeGB: 0.86,
-		// 	parametersB: 1,
-		// 	ramGB: 1,
-		// 	systemMessage: {
-		// 		template:
-		// 			"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
-		// 		defaultTemplateValues: {
-		// 			date_time_string: templateVariables.date_time_string.defaultValue,
-		// 		},
-		// 	},
-		// },
-
 		"granite-4.0-h-micro-GGUF": {
 			name: "Whisper AI Chat (Grnt 4.0 H 3B Micro Q3_K_M)",
 			type: "gguf",
