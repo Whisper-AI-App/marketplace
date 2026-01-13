@@ -1,3 +1,9 @@
+## [4.0.4](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.3...v4.0.4) (2026-01-13)
+
+### Bug Fixes
+
+* update fetch cache settings, comment out unused granite model card for now ([20c1d19](https://github.com/Whisper-AI-App/marketplace/commit/20c1d19062a7467729ecd2485ff5a16bf748352d))
+
 ## [4.0.3](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.2...v4.0.3) (2026-01-13)
 
 ### Bug Fixes
