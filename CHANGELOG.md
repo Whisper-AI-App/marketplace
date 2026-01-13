@@ -1,3 +1,9 @@
+## [4.0.3](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.2...v4.0.3) (2026-01-13)
+
+### Bug Fixes
+
+* url for llama 3.2 1B model ([c18319e](https://github.com/Whisper-AI-App/marketplace/commit/c18319ea27f4e6afae736c62cd3d57ffeb2b9735))
+
 ## [4.0.2](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.1...v4.0.2) (2026-01-12)
 
 ### Bug Fixes
