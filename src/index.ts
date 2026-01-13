@@ -63,9 +63,26 @@ export function processSystemMessage(
 export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 	version: VERSION,
 
-	defaultRecommendedCard: "granite-4.0-1b-GGUF",
+	defaultRecommendedCard: "llama-3.2-1b-instruct-q4_0",
 
 	cards: {
+		"llama-3.2-1b-instruct-q4_0": {
+			name: "Whisper AI Chat (Ll 3.2 1B I Q4_0)",
+			type: "gguf",
+			sourceUrl:
+				"https://huggingface.co/unsloth/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_0.gguf?q=4",
+			sizeGB: 0.72,
+			parametersB: 1,
+			ramGB: 1.5,
+			systemMessage: {
+				template:
+					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+				defaultTemplateValues: {
+					date_time_string: templateVariables.date_time_string.defaultValue,
+				},
+			},
+		},
+
 		"granite-4.0-1b-GGUF": {
 			name: "Whisper AI Chat (Grnt 4.0 1B Q4_K_M)",
 			type: "gguf",
