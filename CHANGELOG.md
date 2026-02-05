@@ -1,3 +1,9 @@
+## [5.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v5.0.0...v5.0.1) (2026-02-05)
+
+### Bug Fixes
+
+* turn off llama and granite models ([1c30331](https://github.com/Whisper-AI-App/marketplace/commit/1c30331a701915eb081cf2e38350ba11cf6e7421))
+
 ## [5.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.5...v5.0.0) (2026-02-05)
 
 ### ⚠ BREAKING CHANGES
