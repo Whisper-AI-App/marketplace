@@ -1,7 +1,21 @@
 {
-    "version": "4.0.5",
-    "defaultRecommendedCard": "llama-3.2-1b-instruct-q4_0",
+    "version": "5.0.0",
+    "defaultRecommendedCard": "lfm2.5-1.2b-instruct-q6_k",
     "cards": {
+        "lfm2.5-1.2b-instruct-q6_k": {
+            "name": "Whisper AI Chat (LFM2.5 1.2B I Q6_K)",
+            "type": "gguf",
+            "sourceUrl": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct-GGUF/resolve/main/LFM2.5-1.2B-Instruct-Q6_K.gguf",
+            "sizeGB": 0.96,
+            "parametersB": 1.2,
+            "ramGB": 1.5,
+            "systemMessage": {
+                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+                "defaultTemplateValues": {
+                    "date_time_string": "2026"
+                }
+            }
+        },
         "llama-3.2-1b-instruct-q4_0": {
             "name": "Whisper AI Chat (Ll 3.2 1B I Q4_0)",
             "type": "gguf",

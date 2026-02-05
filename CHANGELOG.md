@@ -1,3 +1,13 @@
+## [5.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.5...v5.0.0) (2026-02-05)
+
+### ⚠ BREAKING CHANGES
+
+* new model card (`lfm2.5-1.2b-instruct-q6_k`)
+
+### Features
+
+* new model card (`lfm2.5-1.2b-instruct-q6_k`) ([aa26891](https://github.com/Whisper-AI-App/marketplace/commit/aa26891db5a0df1229340453876511c806f34ad7))
+
 ## [4.0.5](https://github.com/Whisper-AI-App/marketplace/compare/v4.0.4...v4.0.5) (2026-01-13)
 
 ### Bug Fixes
