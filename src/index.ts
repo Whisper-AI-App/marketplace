@@ -147,15 +147,17 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 				},
 			},
 			runtime: {
-				n_ctx: 2048,
-				n_predict: 400, // LFM can handle longer outputs
+				n_ctx: 4096,
+				n_predict: -1, // LFM can handle longer outputs
 				sampling: {
 					temperature: 0.7,
 					top_k: 40,
-					top_p: 0.9,
-					penalty_repeat: 1.1,
+					top_p: 0.95,
+					penalty_repeat: 1,
+					penalty_last_n: 64,
+					seed: 0,
 				},
-				stop: ["<|endoftext|>", "<|im_end|>"],
+				stop: ["<|im_end|>"],
 				roles: {
 					user: "user",
 					assistant: "assistant",
