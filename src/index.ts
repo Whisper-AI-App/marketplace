@@ -16,6 +16,7 @@ export interface WhisperLLMCard {
 		template: string; // `You are a 100% private on-device AI chat called Whisper. Today's date is {date_time_string}`
 		defaultTemplateValues: Record<string, string>; // If App's lib doesn't support a new template variable, this is used as a fallback.
 	};
+	runtime?: RuntimeConfig; // Optional runtime config for llama.rn inference
 }
 
 export interface LLMCardCollection {
@@ -27,6 +28,70 @@ export interface WhisperLLMCardsJSON {
 	defaultRecommendedCard: string;
 	cards: LLMCardCollection;
 }
+
+/**
+ * Sampling parameters for llama.rn completion.
+ * Field names match llama.rn's NativeCompletionParams.
+ */
+export interface SamplingParams {
+	temperature?: number; // Default: 0.8
+	top_k?: number; // Default: 40
+	top_p?: number; // Default: 0.95
+	min_p?: number; // Default: 0.05
+	penalty_repeat?: number; // Default: 1.0 (llama.rn uses penalty_repeat, not repeat_penalty)
+	penalty_last_n?: number; // Default: 64 (tokens to consider for penalty)
+	seed?: number; // Default: -1 (random)
+}
+
+export interface RoleMapping {
+	user?: string; // Default: "user"
+	assistant?: string; // Default: "assistant"
+	system?: string; // Default: "system"
+}
+
+/**
+ * Runtime configuration for llama.rn inference.
+ * Maps directly to initLlama ContextParams and completion CompletionParams.
+ */
+export interface RuntimeConfig {
+	// Context params (initLlama)
+	n_ctx?: number; // Context window. Default: 2048
+	flash_attn?: boolean; // Enable flash attention. Default: false
+	cache_type_k?: "f16" | "f32" | "q8_0" | "q4_0"; // KV cache key type
+	cache_type_v?: "f16" | "f32" | "q8_0" | "q4_0"; // KV cache value type
+
+	// Completion params
+	n_predict?: number; // Max tokens to generate. Default: 300
+	sampling?: SamplingParams;
+	stop?: string[]; // Stop sequences. Default: []
+
+	// Chat format
+	roles?: RoleMapping;
+}
+
+export const DEFAULT_SAMPLING: Required<SamplingParams> = {
+	temperature: 0.8,
+	top_k: 40,
+	top_p: 0.95,
+	min_p: 0.05,
+	penalty_repeat: 1.0,
+	penalty_last_n: 64,
+	seed: -1,
+};
+
+export const DEFAULT_ROLES: Required<RoleMapping> = {
+	user: "user",
+	assistant: "assistant",
+	system: "system",
+};
+
+export const DEFAULT_RUNTIME_CONFIG = {
+	n_ctx: 2048,
+	n_predict: 300,
+	sampling: DEFAULT_SAMPLING,
+	stop: [] as string[],
+	roles: DEFAULT_ROLES,
+};
 
 type TemplateVariable = {
 	resolver: (card: WhisperLLMCard, messages: Message[]) => string;
@@ -76,9 +141,25 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 			ramGB: 1.5,
 			systemMessage: {
 				template:
-					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
 				defaultTemplateValues: {
 					date_time_string: templateVariables.date_time_string.defaultValue,
+				},
+			},
+			runtime: {
+				n_ctx: 2048,
+				n_predict: 400, // LFM can handle longer outputs
+				sampling: {
+					temperature: 0.7,
+					top_k: 40,
+					top_p: 0.9,
+					penalty_repeat: 1.1,
+				},
+				stop: ["<|endoftext|>", "<|im_end|>"],
+				roles: {
+					user: "user",
+					assistant: "assistant",
+					system: "system",
 				},
 			},
 		},

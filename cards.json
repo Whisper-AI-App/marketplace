@@ -10,9 +10,28 @@
             "parametersB": 1.2,
             "ramGB": 1.5,
             "systemMessage": {
-                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
                 "defaultTemplateValues": {
                     "date_time_string": "2026"
+                }
+            },
+            "runtime": {
+                "n_ctx": 2048,
+                "n_predict": 400,
+                "sampling": {
+                    "temperature": 0.7,
+                    "top_k": 40,
+                    "top_p": 0.9,
+                    "penalty_repeat": 1.1
+                },
+                "stop": [
+                    "<|endoftext|>",
+                    "<|im_end|>"
+                ],
+                "roles": {
+                    "user": "user",
+                    "assistant": "assistant",
+                    "system": "system"
                 }
             }
         }
