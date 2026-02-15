@@ -1,3 +1,13 @@
+## [6.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v5.0.1...v6.0.0) (2026-02-15)
+
+### ⚠ BREAKING CHANGES
+
+* inference runtime configuration (optional)
+
+### Features
+
+* inference runtime configuration (optional) ([9e53bfc](https://github.com/Whisper-AI-App/marketplace/commit/9e53bfcc6e38a2283b0b8410a1859f35c34f6803))
+
 ## [5.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v5.0.0...v5.0.1) (2026-02-05)
 
 ### Bug Fixes
