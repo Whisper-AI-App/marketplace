@@ -1,6 +1,6 @@
 {
 	"name": "whisper-llm-cards",
-	"version": "5.0.1",
+	"version": "6.0.0",
 	"type": "module",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
