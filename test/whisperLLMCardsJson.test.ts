@@ -140,10 +140,10 @@ test("cards with runtime config have valid structure", (t) => {
 				);
 			}
 
-			// Validate n_predict if present
+			// Validate n_predict if present (-1 means unlimited)
 			if (runtime.n_predict !== undefined) {
 				t.is(typeof runtime.n_predict, "number", `${key}: n_predict should be number`);
-				t.true(runtime.n_predict > 0, `${key}: n_predict should be positive`);
+				t.true(runtime.n_predict > 0 || runtime.n_predict === -1, `${key}: n_predict should be positive or -1 (unlimited)`);
 			}
 
 			// Validate stop if present
