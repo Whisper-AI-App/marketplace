@@ -1,5 +1,18 @@
 import { VERSION } from "./version";
 
+// Re-export schemas and resolver
+export {
+	DeviceCapabilitiesSchema,
+	ResolvedRuntimeSchema,
+	ResolvedSamplingSchema,
+	ResolvedRolesSchema,
+	type DeviceCapabilities,
+	type ResolvedRuntime,
+	type ResolvedSampling,
+	type ResolvedRoles,
+} from "./schemas";
+export { resolveRuntimeConfig } from "./resolver";
+
 export interface Message {
 	role: "system" | "user" | string;
 	content: string;
@@ -30,17 +43,24 @@ export interface WhisperLLMCardsJSON {
 }
 
 /**
+ * Expression or value type helper.
+ * Allows either a direct value or a JSONata expression string (prefixed with $).
+ */
+type ExprOr<T> = T | string;
+
+/**
  * Sampling parameters for llama.rn completion.
  * Field names match llama.rn's NativeCompletionParams.
+ * Values can be direct values or JSONata expression strings (prefixed with $).
  */
 export interface SamplingParams {
-	temperature?: number; // Default: 0.8
-	top_k?: number; // Default: 40
-	top_p?: number; // Default: 0.95
-	min_p?: number; // Default: 0.05
-	penalty_repeat?: number; // Default: 1.0 (llama.rn uses penalty_repeat, not repeat_penalty)
-	penalty_last_n?: number; // Default: 64 (tokens to consider for penalty)
-	seed?: number; // Default: -1 (random)
+	temperature?: ExprOr<number>; // Default: 0.8
+	top_k?: ExprOr<number>; // Default: 40
+	top_p?: ExprOr<number>; // Default: 0.95
+	min_p?: ExprOr<number>; // Default: 0.05
+	penalty_repeat?: ExprOr<number>; // Default: 1.0 (llama.rn uses penalty_repeat, not repeat_penalty)
+	penalty_last_n?: ExprOr<number>; // Default: 64 (tokens to consider for penalty)
+	seed?: ExprOr<number>; // Default: -1 (random)
 }
 
 export interface RoleMapping {
@@ -50,18 +70,26 @@ export interface RoleMapping {
 }
 
 /**
+ * Cache type values for KV cache.
+ */
+export type CacheType = "f16" | "f32" | "q8_0" | "q4_0";
+
+/**
  * Runtime configuration for llama.rn inference.
  * Maps directly to initLlama ContextParams and completion CompletionParams.
+ * Values can be direct values or JSONata expression strings (prefixed with $).
  */
 export interface RuntimeConfig {
 	// Context params (initLlama)
-	n_ctx?: number; // Context window. Default: 2048
-	flash_attn?: boolean; // Enable flash attention. Default: false
-	cache_type_k?: "f16" | "f32" | "q8_0" | "q4_0"; // KV cache key type
-	cache_type_v?: "f16" | "f32" | "q8_0" | "q4_0"; // KV cache value type
+	n_ctx?: ExprOr<number>; // Context window. Default: 2048
+	n_gpu_layers?: ExprOr<number>; // GPU layers for acceleration. Default: platform-dependent
+	n_threads?: ExprOr<number>; // Thread count for inference
+	flash_attn?: ExprOr<boolean>; // Enable flash attention. Default: false
+	cache_type_k?: ExprOr<CacheType>; // KV cache key type
+	cache_type_v?: ExprOr<CacheType>; // KV cache value type
 
 	// Completion params
-	n_predict?: number; // Max tokens to generate. Default: 300
+	n_predict?: ExprOr<number>; // Max tokens to generate. Default: 300
 	sampling?: SamplingParams;
 	stop?: string[]; // Stop sequences. Default: []
 
@@ -69,29 +97,12 @@ export interface RuntimeConfig {
 	roles?: RoleMapping;
 }
 
-export const DEFAULT_SAMPLING: Required<SamplingParams> = {
-	temperature: 0.8,
-	top_k: 40,
-	top_p: 0.95,
-	min_p: 0.05,
-	penalty_repeat: 1.0,
-	penalty_last_n: 64,
-	seed: -1,
-};
-
-export const DEFAULT_ROLES: Required<RoleMapping> = {
-	user: "user",
-	assistant: "assistant",
-	system: "system",
-};
-
-export const DEFAULT_RUNTIME_CONFIG = {
-	n_ctx: 2048,
-	n_predict: 300,
-	sampling: DEFAULT_SAMPLING,
-	stop: [] as string[],
-	roles: DEFAULT_ROLES,
-};
+// Re-export defaults from constants
+export {
+	DEFAULT_SAMPLING,
+	DEFAULT_ROLES,
+	DEFAULT_RUNTIME_CONFIG,
+} from "./constants";
 
 type TemplateVariable = {
 	resolver: (card: WhisperLLMCard, messages: Message[]) => string;
@@ -147,8 +158,28 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 				},
 			},
 			runtime: {
-				n_ctx: 4096,
-				n_predict: -1, // LFM can handle longer outputs
+				// Context window: conserve memory on low-end devices, expand on high-end
+				// <4GB: 2048, 4-8GB: 4096, >8GB or tablet: 8192
+				n_ctx:
+					'$deviceType = "tablet" ? 8192 : $ramGB < 4 ? 2048 : $ramGB < 8 ? 4096 : 8192',
+
+				// GPU layers: iOS has good Metal support, Android GPU can be unstable
+				n_gpu_layers: '$platform = "ios" ? 99 : 0',
+
+				// Thread count: target ~75% of cores to use performance cores only
+				// On big.LITTLE architectures, using all cores makes fast cores wait for slow ones
+				n_threads: "$cpuCoreCount ? $max(2, $floor($cpuCoreCount * 0.75)) : 4",
+
+				// Flash attention: enable on iOS with sufficient RAM for performance boost
+				flash_attn: '$platform = "ios" and $ramGB >= 4',
+
+				// KV cache quantization: major memory savings with minimal quality loss
+				// <4GB: q4_0 (aggressive), 4-8GB: q8_0 (balanced), >8GB: f16 (full precision)
+				cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+				cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+
+				n_predict: -1,
+
 				sampling: {
 					temperature: 0.7,
 					top_k: 40,

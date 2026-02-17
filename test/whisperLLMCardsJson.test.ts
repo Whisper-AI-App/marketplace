@@ -105,6 +105,19 @@ test("DEFAULT_RUNTIME_CONFIG has correct structure", (t) => {
 	t.truthy(DEFAULT_RUNTIME_CONFIG.roles);
 });
 
+// Helper to check if a value is a valid expression string or matches expected type
+const isExprOrType = (value: unknown, expectedType: string): boolean => {
+	if (typeof value === "string" && value.startsWith("$")) return true; // Expression string
+	return typeof value === expectedType;
+};
+
+const isExprOrOneOf = (value: unknown, validValues: string[]): boolean => {
+	if (typeof value === "string" && value.startsWith("$")) return true; // Expression string
+	return typeof value === "string" && validValues.includes(value);
+};
+
+const VALID_CACHE_TYPES = ["f16", "f32", "q8_0", "q5_1", "q5_0", "q4_1", "q4_0", "iq4_nl"];
+
 // Tests for runtime config validation
 test("cards with runtime config have valid structure", (t) => {
 	const { cards } = whisperLLMCardsJson;
@@ -113,37 +126,51 @@ test("cards with runtime config have valid structure", (t) => {
 		if (card.runtime) {
 			const runtime = card.runtime;
 
-			// Validate n_ctx if present
+			// Validate n_ctx if present (number or expression)
 			if (runtime.n_ctx !== undefined) {
-				t.is(typeof runtime.n_ctx, "number", `${key}: n_ctx should be number`);
-				t.true(runtime.n_ctx > 0, `${key}: n_ctx should be positive`);
+				t.true(isExprOrType(runtime.n_ctx, "number"), `${key}: n_ctx should be number or expression`);
+				if (typeof runtime.n_ctx === "number") {
+					t.true(runtime.n_ctx > 0, `${key}: n_ctx should be positive`);
+				}
 			}
 
-			// Validate flash_attn if present
+			// Validate n_gpu_layers if present (number or expression)
+			if (runtime.n_gpu_layers !== undefined) {
+				t.true(isExprOrType(runtime.n_gpu_layers, "number"), `${key}: n_gpu_layers should be number or expression`);
+			}
+
+			// Validate n_threads if present (number or expression)
+			if (runtime.n_threads !== undefined) {
+				t.true(isExprOrType(runtime.n_threads, "number"), `${key}: n_threads should be number or expression`);
+			}
+
+			// Validate flash_attn if present (boolean or expression)
 			if (runtime.flash_attn !== undefined) {
-				t.is(typeof runtime.flash_attn, "boolean", `${key}: flash_attn should be boolean`);
+				t.true(isExprOrType(runtime.flash_attn, "boolean"), `${key}: flash_attn should be boolean or expression`);
 			}
 
-			// Validate cache_type_k if present
+			// Validate cache_type_k if present (valid enum or expression)
 			if (runtime.cache_type_k !== undefined) {
 				t.true(
-					["f16", "f32", "q8_0", "q4_0"].includes(runtime.cache_type_k),
-					`${key}: cache_type_k should be valid type`,
+					isExprOrOneOf(runtime.cache_type_k, VALID_CACHE_TYPES),
+					`${key}: cache_type_k should be valid type or expression`,
 				);
 			}
 
-			// Validate cache_type_v if present
+			// Validate cache_type_v if present (valid enum or expression)
 			if (runtime.cache_type_v !== undefined) {
 				t.true(
-					["f16", "f32", "q8_0", "q4_0"].includes(runtime.cache_type_v),
-					`${key}: cache_type_v should be valid type`,
+					isExprOrOneOf(runtime.cache_type_v, VALID_CACHE_TYPES),
+					`${key}: cache_type_v should be valid type or expression`,
 				);
 			}
 
-			// Validate n_predict if present (-1 means unlimited)
+			// Validate n_predict if present (number or expression)
 			if (runtime.n_predict !== undefined) {
-				t.is(typeof runtime.n_predict, "number", `${key}: n_predict should be number`);
-				t.true(runtime.n_predict > 0 || runtime.n_predict === -1, `${key}: n_predict should be positive or -1 (unlimited)`);
+				t.true(isExprOrType(runtime.n_predict, "number"), `${key}: n_predict should be number or expression`);
+				if (typeof runtime.n_predict === "number") {
+					t.true(runtime.n_predict > 0 || runtime.n_predict === -1, `${key}: n_predict should be positive or -1 (unlimited)`);
+				}
 			}
 
 			// Validate stop if present
@@ -159,37 +186,49 @@ test("cards with runtime config have valid structure", (t) => {
 				const sampling = runtime.sampling;
 
 				if (sampling.temperature !== undefined) {
-					t.is(typeof sampling.temperature, "number", `${key}: temperature should be number`);
-					t.true(sampling.temperature >= 0 && sampling.temperature <= 2, `${key}: temperature should be 0-2`);
+					t.true(isExprOrType(sampling.temperature, "number"), `${key}: temperature should be number or expression`);
+					if (typeof sampling.temperature === "number") {
+						t.true(sampling.temperature >= 0 && sampling.temperature <= 2, `${key}: temperature should be 0-2`);
+					}
 				}
 
 				if (sampling.top_k !== undefined) {
-					t.is(typeof sampling.top_k, "number", `${key}: top_k should be number`);
-					t.true(sampling.top_k > 0, `${key}: top_k should be positive`);
+					t.true(isExprOrType(sampling.top_k, "number"), `${key}: top_k should be number or expression`);
+					if (typeof sampling.top_k === "number") {
+						t.true(sampling.top_k > 0, `${key}: top_k should be positive`);
+					}
 				}
 
 				if (sampling.top_p !== undefined) {
-					t.is(typeof sampling.top_p, "number", `${key}: top_p should be number`);
-					t.true(sampling.top_p > 0 && sampling.top_p <= 1, `${key}: top_p should be 0-1`);
+					t.true(isExprOrType(sampling.top_p, "number"), `${key}: top_p should be number or expression`);
+					if (typeof sampling.top_p === "number") {
+						t.true(sampling.top_p > 0 && sampling.top_p <= 1, `${key}: top_p should be 0-1`);
+					}
 				}
 
 				if (sampling.min_p !== undefined) {
-					t.is(typeof sampling.min_p, "number", `${key}: min_p should be number`);
-					t.true(sampling.min_p >= 0 && sampling.min_p <= 1, `${key}: min_p should be 0-1`);
+					t.true(isExprOrType(sampling.min_p, "number"), `${key}: min_p should be number or expression`);
+					if (typeof sampling.min_p === "number") {
+						t.true(sampling.min_p >= 0 && sampling.min_p <= 1, `${key}: min_p should be 0-1`);
+					}
 				}
 
 				if (sampling.penalty_repeat !== undefined) {
-					t.is(typeof sampling.penalty_repeat, "number", `${key}: penalty_repeat should be number`);
-					t.true(sampling.penalty_repeat >= 1, `${key}: penalty_repeat should be >= 1`);
+					t.true(isExprOrType(sampling.penalty_repeat, "number"), `${key}: penalty_repeat should be number or expression`);
+					if (typeof sampling.penalty_repeat === "number") {
+						t.true(sampling.penalty_repeat >= 1, `${key}: penalty_repeat should be >= 1`);
+					}
 				}
 
 				if (sampling.penalty_last_n !== undefined) {
-					t.is(typeof sampling.penalty_last_n, "number", `${key}: penalty_last_n should be number`);
-					t.true(sampling.penalty_last_n >= 0, `${key}: penalty_last_n should be >= 0`);
+					t.true(isExprOrType(sampling.penalty_last_n, "number"), `${key}: penalty_last_n should be number or expression`);
+					if (typeof sampling.penalty_last_n === "number") {
+						t.true(sampling.penalty_last_n >= 0, `${key}: penalty_last_n should be >= 0`);
+					}
 				}
 
 				if (sampling.seed !== undefined) {
-					t.is(typeof sampling.seed, "number", `${key}: seed should be number`);
+					t.true(isExprOrType(sampling.seed, "number"), `${key}: seed should be number or expression`);
 				}
 			}
 
