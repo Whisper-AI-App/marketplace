@@ -1,5 +1,5 @@
 {
-    "version": "7.0.1",
+    "version": "7.0.2",
     "defaultRecommendedCard": "lfm2.5-1.2b-instruct-q6_k",
     "cards": {
         "lfm2.5-1.2b-instruct-q6_k": {
@@ -18,7 +18,7 @@
             "runtime": {
                 "n_ctx": "$deviceType = \"tablet\" ? 8192 : $ramGB < 2 ? 1024 : $ramGB < 4 ? 2048 : $ramGB < 8 ? 4096 : 8192",
                 "n_gpu_layers": "$platform = \"ios\" ? 99 : 0",
-                "n_threads": "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.75)]) : 4",
+                "n_threads": "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
                 "flash_attn": "$platform = \"ios\" and $ramGB >= 4",
                 "cache_type_k": "$ramGB < 4 ? \"q4_0\" : $ramGB < 8 ? \"q8_0\" : \"f16\"",
                 "cache_type_v": "$ramGB < 4 ? \"q4_0\" : $ramGB < 8 ? \"q8_0\" : \"f16\"",
