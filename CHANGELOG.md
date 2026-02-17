@@ -1,3 +1,9 @@
+## [7.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.0...v7.0.1) (2026-02-17)
+
+### Bug Fixes
+
+* adjusted Context window conserve memory on low-end devices, expand on high-end ([0401e5c](https://github.com/Whisper-AI-App/marketplace/commit/0401e5c2425496cb934ceb32a89c001dd5560091))
+
 ## [7.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v6.0.1...v7.0.0) (2026-02-17)
 
 ### ⚠ BREAKING CHANGES
