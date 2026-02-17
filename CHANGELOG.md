@@ -1,3 +1,17 @@
+## [7.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v6.0.1...v7.0.0) (2026-02-17)
+
+### ⚠ BREAKING CHANGES
+
+* dynamic resolved values for model configuration based on device hardware
+
+### Features
+
+* dynamic resolved values for model configuration based on device hardware ([3325b78](https://github.com/Whisper-AI-App/marketplace/commit/3325b786bf8653945a59a19f968fb91db38e6ca3))
+
+### Bug Fixes
+
+* JSONata expression for n_threads used incorrect syntax for the $max function. ([c860874](https://github.com/Whisper-AI-App/marketplace/commit/c8608747a57121d82c0434fb8ff59140dcacf114))
+
 ## [6.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v6.0.0...v6.0.1) (2026-02-15)
 
 ### Bug Fixes
