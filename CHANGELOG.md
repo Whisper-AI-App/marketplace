@@ -1,3 +1,9 @@
+## [7.0.2](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.1...v7.0.2) (2026-02-17)
+
+### Bug Fixes
+
+* more compatible thread calculation (based on https://github.com/abetlen/llama-cpp-python/issues/89) ([bcc05b7](https://github.com/Whisper-AI-App/marketplace/commit/bcc05b772f21583b651e113f1077e2ce19094fee))
+
 ## [7.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.0...v7.0.1) (2026-02-17)
 
 ### Bug Fixes
