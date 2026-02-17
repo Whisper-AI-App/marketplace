@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/Whisper-AI-App/marketplace/compare/v6.0.0...v6.0.1) (2026-02-15)
+
+### Bug Fixes
+
+* update LFM2.5b runtime configuration for improved performance ([5ef43c2](https://github.com/Whisper-AI-App/marketplace/commit/5ef43c21d01b3f071cb9bf06a6803209749512a5))
+* update test for runtime config validation for n_predict to allow unlimited value (-1) ([f600fb5](https://github.com/Whisper-AI-App/marketplace/commit/f600fb5ed23d97bb4e3b222aa0414a15b1beeb6b))
+
 ## [6.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v5.0.1...v6.0.0) (2026-02-15)
 
 ### ⚠ BREAKING CHANGES
