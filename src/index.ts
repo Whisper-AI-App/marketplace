@@ -168,8 +168,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 
 				// Thread count: target ~75% of cores to use performance cores only
 				// On big.LITTLE architectures, using all cores makes fast cores wait for slow ones
-				n_threads:
-					"$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.75)]) : 4",
+				n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
 
 				// Flash attention: enable on iOS with sufficient RAM for performance boost
 				flash_attn: '$platform = "ios" and $ramGB >= 4',
