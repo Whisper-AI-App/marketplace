@@ -159,16 +159,17 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 			},
 			runtime: {
 				// Context window: conserve memory on low-end devices, expand on high-end
-				// <4GB: 2048, 4-8GB: 4096, >8GB or tablet: 8192
+				// <2GB: 1024, <4GB: 2048, 4-8GB: 4096, >8GB or tablet: 8192
 				n_ctx:
-					'$deviceType = "tablet" ? 8192 : $ramGB < 4 ? 2048 : $ramGB < 8 ? 4096 : 8192',
+					'$deviceType = "tablet" ? 8192 : $ramGB < 2 ? 1024 : $ramGB < 4 ? 2048 : $ramGB < 8 ? 4096 : 8192',
 
 				// GPU layers: iOS has good Metal support, Android GPU can be unstable
 				n_gpu_layers: '$platform = "ios" ? 99 : 0',
 
 				// Thread count: target ~75% of cores to use performance cores only
 				// On big.LITTLE architectures, using all cores makes fast cores wait for slow ones
-				n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.75)]) : 4",
+				n_threads:
+					"$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.75)]) : 4",
 
 				// Flash attention: enable on iOS with sufficient RAM for performance boost
 				flash_attn: '$platform = "ios" and $ramGB >= 4',
