@@ -1,3 +1,9 @@
+## [7.0.3](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.2...v7.0.3) (2026-02-17)
+
+### Bug Fixes
+
+* n_ctx better adjusted for android + small phones ([b2bb6ca](https://github.com/Whisper-AI-App/marketplace/commit/b2bb6cad199c42809a80df247685c244a4313166))
+
 ## [7.0.2](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.1...v7.0.2) (2026-02-17)
 
 ### Bug Fixes
