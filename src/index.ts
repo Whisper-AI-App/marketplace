@@ -143,7 +143,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 
 	cards: {
 		"lfm2.5-1.2b-instruct-q6_k": {
-			name: "Whisper AI Chat (LFM2.5 1.2B I Q6_K)",
+			name: "Whisper AI (LFM2.5 1.2B I Q6_K)",
 			type: "gguf",
 			sourceUrl:
 				"https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct-GGUF/resolve/main/LFM2.5-1.2B-Instruct-Q6_K.gguf",
@@ -195,7 +195,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 		},
 
 		// "llama-3.2-1b-instruct-q4_0": {
-		// 	name: "Whisper AI Chat (Ll 3.2 1B I Q4_0)",
+		// 	name: "Whisper AI (Ll 3.2 1B I Q4_0)",
 		// 	type: "gguf",
 		// 	sourceUrl:
 		// 		"https://huggingface.co/unsloth/Llama-3.2-1B-Instruct-GGUF/resolve/main/Llama-3.2-1B-Instruct-Q4_0.gguf",
@@ -212,7 +212,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 		// },
 
 		// "granite-4.0-h-micro-GGUF": {
-		// 	name: "Whisper AI Chat (Grnt 4.0 H 3B Micro Q3_K_M)",
+		// 	name: "Whisper AI (Grnt 4.0 H 3B Micro Q3_K_M)",
 		// 	type: "gguf",
 		// 	sourceUrl:
 		// 		"https://huggingface.co/ibm-granite/granite-4.0-h-micro-GGUF/resolve/main/granite-4.0-h-micro-Q3_K_M.gguf",
