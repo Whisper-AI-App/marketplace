@@ -1,3 +1,9 @@
+## [7.1.0](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.3...v7.1.0) (2026-02-27)
+
+### Features
+
+* decorative change to name for models ([9f10860](https://github.com/Whisper-AI-App/marketplace/commit/9f108609ea8e16f0d2b668392653b734a96f124f))
+
 ## [7.0.3](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.2...v7.0.3) (2026-02-17)
 
 ### Bug Fixes

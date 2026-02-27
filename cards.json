@@ -1,9 +1,9 @@
 {
-    "version": "7.0.3",
+    "version": "7.1.0",
     "defaultRecommendedCard": "lfm2.5-1.2b-instruct-q6_k",
     "cards": {
         "lfm2.5-1.2b-instruct-q6_k": {
-            "name": "Whisper AI Chat (LFM2.5 1.2B I Q6_K)",
+            "name": "Whisper AI (LFM2.5 1.2B I Q6_K)",
             "type": "gguf",
             "sourceUrl": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct-GGUF/resolve/main/LFM2.5-1.2B-Instruct-Q6_K.gguf",
             "sizeGB": 0.96,
