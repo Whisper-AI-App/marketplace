@@ -6,12 +6,22 @@ export {
 	ResolvedRuntimeSchema,
 	ResolvedSamplingSchema,
 	ResolvedRolesSchema,
+	MultimodalConfigSchema,
+	VisionConfigSchema,
+	AudioConfigSchema,
+	FilesConfigSchema,
+	ResolvedMultimodalSchema,
+	ResolvedVisionSchema,
+	ResolvedAudioSchema,
+	ResolvedFilesSchema,
+	MmprojSchema,
 	type DeviceCapabilities,
 	type ResolvedRuntime,
 	type ResolvedSampling,
 	type ResolvedRoles,
+	type ResolvedMultimodal,
 } from "./schemas";
-export { resolveRuntimeConfig } from "./resolver";
+export { resolveRuntimeConfig, resolveMultimodalConfig } from "./resolver";
 
 export interface Message {
 	role: "system" | "user" | string;
@@ -30,6 +40,7 @@ export interface WhisperLLMCard {
 		defaultTemplateValues: Record<string, string>; // If App's lib doesn't support a new template variable, this is used as a fallback.
 	};
 	runtime?: RuntimeConfig; // Optional runtime config for llama.rn inference
+	multimodal?: MultimodalConfig; // Optional multimodal capability declaration
 }
 
 export interface LLMCardCollection {
@@ -97,11 +108,54 @@ export interface RuntimeConfig {
 	roles?: RoleMapping;
 }
 
+// ─── Multimodal Configuration ─────────────────────────────────
+
+export interface MmprojConfig {
+	sourceUrl: string;
+	sizeGB: number;
+}
+
+export interface VisionConfig {
+	enabled: ExprOr<boolean>;
+	maxWidth: ExprOr<number>;
+	maxHeight: ExprOr<number>;
+	imageMinTokens?: ExprOr<number>;
+	imageMaxTokens?: ExprOr<number>;
+	supportedFormats?: string[];
+}
+
+export interface AudioConfig {
+	enabled: ExprOr<boolean>;
+	sampleRate?: ExprOr<number>;
+	format?: string;
+	maxDurationSeconds?: ExprOr<number>;
+}
+
+export interface FilesConfig {
+	enabled: ExprOr<boolean>;
+	maxSizeBytes?: ExprOr<number>;
+	supportedTypes?: string[];
+}
+
+/**
+ * Multimodal capability declaration for a model card.
+ * When absent, the model has no multimodal capabilities.
+ */
+export interface MultimodalConfig {
+	mmproj?: MmprojConfig;
+	vision?: VisionConfig;
+	audio?: AudioConfig;
+	files?: FilesConfig;
+}
+
 // Re-export defaults from constants
 export {
 	DEFAULT_SAMPLING,
 	DEFAULT_ROLES,
 	DEFAULT_RUNTIME_CONFIG,
+	DEFAULT_VISION,
+	DEFAULT_AUDIO,
+	DEFAULT_FILES,
 } from "./constants";
 
 type TemplateVariable = {
@@ -190,6 +244,93 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 					user: "user",
 					assistant: "assistant",
 					system: "system",
+				},
+			},
+		},
+
+		"qwen3.5-2b-q4_k_m": {
+			name: "Whisper AI Chat (Qwen3.5 2B Q4_K_M)",
+			type: "gguf",
+			sourceUrl:
+				"https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-Q4_K_M.gguf",
+			sizeGB: 1.28,
+			parametersB: 2,
+			ramGB: 3,
+			systemMessage: {
+				template:
+					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+				defaultTemplateValues: {
+					date_time_string: templateVariables.date_time_string.defaultValue,
+				},
+			},
+			runtime: {
+				n_ctx: "$max([512, $round($ramGB * 1024 / 3)])",
+				n_gpu_layers: '$platform = "ios" ? 99 : 0',
+				n_threads:
+					"$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
+				flash_attn: '$platform = "ios" and $ramGB >= 4',
+				cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+				cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+				n_predict: -1,
+				sampling: {
+					temperature: 0.7,
+					top_k: 20,
+					top_p: 0.8,
+					penalty_repeat: 1.0,
+					penalty_last_n: 64,
+					seed: 0,
+				},
+				stop: ["<|im_end|>", "<|endoftext|>"],
+			},
+		},
+
+		"qwen3.5-4b-q4_k_m": {
+			name: "Whisper AI Vision (Qwen3.5 4B Q4_K_M)",
+			type: "gguf",
+			sourceUrl:
+				"https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/Qwen3.5-4B-Q4_K_M.gguf",
+			sizeGB: 2.74,
+			parametersB: 4,
+			ramGB: 6,
+			systemMessage: {
+				template:
+					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
+				defaultTemplateValues: {
+					date_time_string: templateVariables.date_time_string.defaultValue,
+				},
+			},
+			runtime: {
+				n_ctx: "$max([512, $round($ramGB * 1024 / 6)])",
+				n_gpu_layers: '$platform = "ios" ? 99 : 0',
+				n_threads:
+					"$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
+				flash_attn: '$platform = "ios" and $ramGB >= 6',
+				cache_type_k: '$ramGB < 8 ? "q8_0" : "f16"',
+				cache_type_v: '$ramGB < 8 ? "q8_0" : "f16"',
+				n_predict: -1,
+				sampling: {
+					temperature: 0.7,
+					top_k: 20,
+					top_p: 0.8,
+					penalty_repeat: 1.0,
+					penalty_last_n: 64,
+					seed: 0,
+				},
+				stop: ["<|im_end|>", "<|endoftext|>"],
+			},
+			multimodal: {
+				mmproj: {
+					sourceUrl:
+						"https://huggingface.co/unsloth/Qwen3.5-4B-GGUF/resolve/main/mmproj-F16.gguf",
+					sizeGB: 0.66,
+				},
+				vision: {
+					enabled: "$ramGB >= 8",
+					maxWidth: "$ramGB >= 10 ? 672 : 336",
+					maxHeight: "$ramGB >= 10 ? 672 : 336",
+					imageMinTokens: 128,
+					imageMaxTokens: "$ramGB >= 10 ? 1024 : 256",
+					supportedFormats: ["jpeg", "png", "webp"],
 				},
 			},
 		},

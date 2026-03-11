@@ -2,8 +2,10 @@
 import test from "ava";
 import {
 	resolveRuntimeConfig,
+	resolveMultimodalConfig,
 	type DeviceCapabilities,
 	type RuntimeConfig,
+	type MultimodalConfig,
 } from "../src";
 
 // Test device configurations for different device tiers
@@ -288,4 +290,120 @@ test("handles device without optional fields", async (t) => {
 	const resolved = await resolveRuntimeConfig(config, minimalDevice);
 	t.is(resolved.n_ctx, 2048);
 	t.is(resolved.n_threads, 4, "Should fallback when cpuCoreCount is undefined");
+});
+
+// T010: Multimodal expression resolution tests
+
+test("resolveMultimodalConfig returns undefined for undefined input", async (t) => {
+	const result = await resolveMultimodalConfig(undefined, midRangeDevice);
+	t.is(result, undefined);
+});
+
+test("resolveMultimodalConfig resolves vision expressions for high RAM device", async (t) => {
+	const config: MultimodalConfig = {
+		mmproj: {
+			sourceUrl: "https://huggingface.co/example/mmproj.gguf",
+			sizeGB: 0.66,
+		},
+		vision: {
+			enabled: "$ramGB >= 8",
+			maxWidth: "$ramGB >= 10 ? 672 : 336",
+			maxHeight: "$ramGB >= 10 ? 672 : 336",
+			imageMinTokens: 128,
+			imageMaxTokens: "$ramGB >= 10 ? 1024 : 256",
+			supportedFormats: ["jpeg", "png", "webp"],
+		},
+	};
+
+	const result = await resolveMultimodalConfig(config, highEndDevice);
+	t.truthy(result);
+	t.truthy(result!.vision);
+	t.is(result!.vision!.enabled, true); // 12GB >= 8
+	t.is(result!.vision!.maxWidth, 672); // 12GB >= 10
+	t.is(result!.vision!.maxHeight, 672);
+	t.is(result!.vision!.imageMaxTokens, 1024);
+	t.deepEqual(result!.vision!.supportedFormats, ["jpeg", "png", "webp"]);
+});
+
+test("resolveMultimodalConfig resolves vision as disabled for low RAM", async (t) => {
+	const config: MultimodalConfig = {
+		vision: {
+			enabled: "$ramGB >= 8",
+			maxWidth: "$ramGB >= 10 ? 672 : 336",
+			maxHeight: "$ramGB >= 10 ? 672 : 336",
+		},
+	};
+
+	const result = await resolveMultimodalConfig(config, lowEndDevice);
+	t.truthy(result);
+	t.truthy(result!.vision);
+	t.is(result!.vision!.enabled, false); // 3GB < 8
+	t.is(result!.vision!.maxWidth, 336); // 3GB < 10
+});
+
+test("resolveMultimodalConfig merges audio defaults", async (t) => {
+	const config: MultimodalConfig = {
+		audio: {
+			enabled: true,
+		},
+	};
+
+	const result = await resolveMultimodalConfig(config, midRangeDevice);
+	t.truthy(result);
+	t.truthy(result!.audio);
+	t.is(result!.audio!.enabled, true);
+	t.is(result!.audio!.sampleRate, 16000);
+	t.is(result!.audio!.format, "wav");
+	t.is(result!.audio!.maxDurationSeconds, 120);
+});
+
+test("resolveMultimodalConfig merges files defaults", async (t) => {
+	const config: MultimodalConfig = {
+		files: {
+			enabled: true,
+		},
+	};
+
+	const result = await resolveMultimodalConfig(config, midRangeDevice);
+	t.truthy(result);
+	t.truthy(result!.files);
+	t.is(result!.files!.enabled, true);
+	t.is(result!.files!.maxSizeBytes, 10 * 1024 * 1024);
+	t.deepEqual(result!.files!.supportedTypes, ["txt", "md", "json", "csv"]);
+});
+
+test("resolveMultimodalConfig resolves full config with all sections", async (t) => {
+	const config: MultimodalConfig = {
+		mmproj: {
+			sourceUrl: "https://huggingface.co/example/mmproj.gguf",
+			sizeGB: 0.66,
+		},
+		vision: {
+			enabled: true,
+			maxWidth: 672,
+			maxHeight: 672,
+			supportedFormats: ["jpeg", "png"],
+		},
+		audio: {
+			enabled: "$ramGB >= 4",
+			sampleRate: 16000,
+			format: "wav",
+			maxDurationSeconds: 60,
+		},
+		files: {
+			enabled: true,
+			maxSizeBytes: 5242880,
+			supportedTypes: ["txt", "md"],
+		},
+	};
+
+	const result = await resolveMultimodalConfig(config, midRangeDevice);
+	t.truthy(result);
+	t.truthy(result!.mmproj);
+	t.is(result!.mmproj!.sizeGB, 0.66);
+	t.is(result!.vision!.enabled, true);
+	t.is(result!.audio!.enabled, true); // 6GB >= 4
+	t.is(result!.audio!.maxDurationSeconds, 60);
+	t.is(result!.files!.enabled, true);
+	t.is(result!.files!.maxSizeBytes, 5242880);
 });

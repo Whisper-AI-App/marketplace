@@ -74,3 +74,100 @@ export type DeviceCapabilities = z.infer<typeof DeviceCapabilitiesSchema>;
 export type ResolvedSampling = z.infer<typeof ResolvedSamplingSchema>;
 export type ResolvedRoles = z.infer<typeof ResolvedRolesSchema>;
 export type ResolvedRuntime = z.infer<typeof ResolvedRuntimeSchema>;
+
+// ─── Multimodal Schemas ────────────────────────────────────────
+
+const exprOrBoolean = z.union([z.boolean(), z.string()]);
+const exprOrNumber = z.union([z.number(), z.string()]);
+
+/**
+ * Mmproj projector model configuration.
+ */
+export const MmprojSchema = z.object({
+	sourceUrl: z.string().url(),
+	sizeGB: z.number().positive(),
+});
+
+/**
+ * Vision/image capabilities (pre-resolution, allows ExprOr strings).
+ */
+export const VisionConfigSchema = z.object({
+	enabled: exprOrBoolean,
+	maxWidth: exprOrNumber,
+	maxHeight: exprOrNumber,
+	imageMinTokens: exprOrNumber.optional(),
+	imageMaxTokens: exprOrNumber.optional(),
+	supportedFormats: z.array(z.string()).optional(),
+});
+
+/**
+ * Audio input capabilities (pre-resolution).
+ */
+export const AudioConfigSchema = z.object({
+	enabled: exprOrBoolean,
+	sampleRate: exprOrNumber.optional(),
+	format: z.string().optional(),
+	maxDurationSeconds: exprOrNumber.optional(),
+});
+
+/**
+ * File/document input capabilities (pre-resolution).
+ */
+export const FilesConfigSchema = z.object({
+	enabled: exprOrBoolean,
+	maxSizeBytes: exprOrNumber.optional(),
+	supportedTypes: z.array(z.string()).optional(),
+});
+
+/**
+ * Full multimodal configuration (pre-resolution).
+ */
+export const MultimodalConfigSchema = z.object({
+	mmproj: MmprojSchema.optional(),
+	vision: VisionConfigSchema.optional(),
+	audio: AudioConfigSchema.optional(),
+	files: FilesConfigSchema.optional(),
+});
+
+/**
+ * Resolved vision config (all expressions evaluated).
+ */
+export const ResolvedVisionSchema = z.object({
+	enabled: z.boolean(),
+	maxWidth: z.number().int().positive(),
+	maxHeight: z.number().int().positive(),
+	imageMinTokens: z.number().int().nonnegative().optional(),
+	imageMaxTokens: z.number().int().positive().optional(),
+	supportedFormats: z.array(z.string()),
+});
+
+/**
+ * Resolved audio config.
+ */
+export const ResolvedAudioSchema = z.object({
+	enabled: z.boolean(),
+	sampleRate: z.number().int().positive(),
+	format: z.string(),
+	maxDurationSeconds: z.number().int().positive(),
+});
+
+/**
+ * Resolved files config.
+ */
+export const ResolvedFilesSchema = z.object({
+	enabled: z.boolean(),
+	maxSizeBytes: z.number().int().positive(),
+	supportedTypes: z.array(z.string()),
+});
+
+/**
+ * Fully resolved multimodal configuration.
+ */
+export const ResolvedMultimodalSchema = z.object({
+	mmproj: MmprojSchema.optional(),
+	vision: ResolvedVisionSchema.optional(),
+	audio: ResolvedAudioSchema.optional(),
+	files: ResolvedFilesSchema.optional(),
+});
+
+export type ResolvedMultimodal = z.infer<typeof ResolvedMultimodalSchema>;

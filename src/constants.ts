@@ -30,3 +30,27 @@ export const DEFAULT_RUNTIME_CONFIG = {
 	stop: [] as string[],
 	roles: DEFAULT_ROLES,
 } as const;
+
+/**
+ * Default vision configuration values.
+ */
+export const DEFAULT_VISION = {
+	supportedFormats: ["jpeg", "png"],
+} as const;
+
+/**
+ * Default audio configuration values.
+ */
+export const DEFAULT_AUDIO = {
+	sampleRate: 16000,
+	format: "wav",
+	maxDurationSeconds: 120,
+} as const;
+
+/**
+ * Default files configuration values.
+ */
+export const DEFAULT_FILES = {
+	maxSizeBytes: 10 * 1024 * 1024, // 10 MB
+	supportedTypes: ["txt", "md", "json", "csv"],
+} as const;

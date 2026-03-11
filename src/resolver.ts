@@ -2,11 +2,18 @@ import jsonata from "jsonata";
 import {
 	DeviceCapabilitiesSchema,
 	ResolvedRuntimeSchema,
+	ResolvedMultimodalSchema,
 	type DeviceCapabilities,
 	type ResolvedRuntime,
+	type ResolvedMultimodal,
 } from "./schemas";
-import { DEFAULT_RUNTIME_CONFIG } from "./constants";
-import type { RuntimeConfig } from "./index";
+import {
+	DEFAULT_RUNTIME_CONFIG,
+	DEFAULT_VISION,
+	DEFAULT_AUDIO,
+	DEFAULT_FILES,
+} from "./constants";
+import type { RuntimeConfig, MultimodalConfig } from "./index";
 
 /**
  * Evaluates a JSONata expression string with device capabilities as context.
@@ -121,4 +128,65 @@ export async function resolveRuntimeConfig(
 
 	// Validate and return
 	return ResolvedRuntimeSchema.parse(resolved);
+}
+
+/**
+ * Resolves a multimodal configuration by evaluating all dynamic expressions.
+ *
+ * @param rawMultimodal - Multimodal config potentially containing expression strings
+ * @param device - Device capabilities for expression evaluation
+ * @returns Fully resolved multimodal configuration, or undefined if input is undefined
+ */
+export async function resolveMultimodalConfig(
+	rawMultimodal: MultimodalConfig | undefined,
+	device: DeviceCapabilities,
+): Promise<ResolvedMultimodal | undefined> {
+	if (!rawMultimodal) return undefined;
+
+	const validatedDevice = DeviceCapabilitiesSchema.parse(device);
+
+	const configToResolve: Record<string, unknown> = {};
+
+	// mmproj is static (no expressions), pass through
+	if (rawMultimodal.mmproj) {
+		configToResolve.mmproj = rawMultimodal.mmproj;
+	}
+
+	// Vision: merge defaults for optional fields
+	if (rawMultimodal.vision) {
+		configToResolve.vision = {
+			enabled: rawMultimodal.vision.enabled,
+			maxWidth: rawMultimodal.vision.maxWidth,
+			maxHeight: rawMultimodal.vision.maxHeight,
+			imageMinTokens: rawMultimodal.vision.imageMinTokens,
+			imageMaxTokens: rawMultimodal.vision.imageMaxTokens,
+			supportedFormats:
+				rawMultimodal.vision.supportedFormats ?? DEFAULT_VISION.supportedFormats,
+		};
+	}
+
+	// Audio: merge defaults
+	if (rawMultimodal.audio) {
+		configToResolve.audio = {
+			enabled: rawMultimodal.audio.enabled,
+			sampleRate: rawMultimodal.audio.sampleRate ?? DEFAULT_AUDIO.sampleRate,
+			format: rawMultimodal.audio.format ?? DEFAULT_AUDIO.format,
+			maxDurationSeconds:
+				rawMultimodal.audio.maxDurationSeconds ?? DEFAULT_AUDIO.maxDurationSeconds,
+		};
+	}
+
+	// Files: merge defaults
+	if (rawMultimodal.files) {
+		configToResolve.files = {
+			enabled: rawMultimodal.files.enabled,
+			maxSizeBytes:
+				rawMultimodal.files.maxSizeBytes ?? DEFAULT_FILES.maxSizeBytes,
+			supportedTypes:
+				rawMultimodal.files.supportedTypes ?? DEFAULT_FILES.supportedTypes,
+		};
+	}
+
+	const resolved = await evaluateExpressions(configToResolve, validatedDevice);
+	return ResolvedMultimodalSchema.parse(resolved);
 }

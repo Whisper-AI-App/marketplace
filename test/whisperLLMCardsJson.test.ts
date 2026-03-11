@@ -260,3 +260,43 @@ test("default recommended card has runtime config", (t) => {
 	t.truthy(card.runtime?.sampling, "Default recommended card should have sampling config");
 	t.true(Array.isArray(card.runtime?.stop), "Default recommended card should have stop array");
 });
+
+// T009: Qwen3.5 card validation tests
+
+test("all 3 model cards exist", (t) => {
+	const { cards } = whisperLLMCardsJson;
+	t.truthy(cards["lfm2.5-1.2b-instruct-q6_k"], "LFM2.5 1.2B should exist");
+	t.truthy(cards["qwen3.5-2b-q4_k_m"], "Qwen3.5 2B should exist");
+	t.truthy(cards["qwen3.5-4b-q4_k_m"], "Qwen3.5 4B should exist");
+});
+
+test("Qwen3.5 2B card has correct fields", (t) => {
+	const card = whisperLLMCardsJson.cards["qwen3.5-2b-q4_k_m"];
+	t.truthy(card);
+	t.is(card.type, "gguf");
+	t.is(card.parametersB, 2);
+	t.is(card.ramGB, 3);
+	t.true(card.sourceUrl.includes("Qwen3.5-2B"));
+	t.truthy(card.runtime);
+	t.is(card.multimodal, undefined, "Qwen3.5 2B should have no multimodal");
+});
+
+test("Qwen3.5 4B card has multimodal config with mmproj", (t) => {
+	const card = whisperLLMCardsJson.cards["qwen3.5-4b-q4_k_m"];
+	t.truthy(card);
+	t.is(card.parametersB, 4);
+	t.truthy(card.multimodal);
+	t.truthy(card.multimodal?.mmproj);
+	t.true(card.multimodal!.mmproj!.sourceUrl.includes("mmproj"));
+	t.is(card.multimodal!.mmproj!.sizeGB, 0.66);
+});
+
+test("Qwen3.5 4B vision config has all required fields", (t) => {
+	const vision = whisperLLMCardsJson.cards["qwen3.5-4b-q4_k_m"].multimodal?.vision;
+	t.truthy(vision, "4B should have vision config");
+	t.truthy(vision!.enabled);
+	t.truthy(vision!.maxWidth);
+	t.truthy(vision!.maxHeight);
+	t.true(Array.isArray(vision!.supportedFormats));
+	t.true(vision!.supportedFormats!.includes("jpeg"));
+});
