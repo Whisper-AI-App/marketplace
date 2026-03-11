@@ -24,7 +24,10 @@
 		"postinstall": "npm run build || pnpm build || yarn build || true",
 		"lint": "biome lint",
 		"format": "biome check --write",
-		"test": "ava"
+		"test": "ava",
+		"benchmark": "tsx scripts/benchmark.ts",
+		"benchmark:judge": "npx nanotune judge configure",
+		"benchmark:export": "tsx scripts/benchmark-export.ts"
 	},
 	"ava": {
 		"extensions": {
@@ -64,6 +67,7 @@
 		"@types/node": "^22.10.2",
 		"ava": "^6.4.1",
 		"conventional-changelog-conventionalcommits": "^8.0.0",
+		"@nanocollective/nanotune": "^1.2.1",
 		"semantic-release": "^24.2.0"
 	}
 }
