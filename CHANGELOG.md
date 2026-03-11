@@ -1,3 +1,13 @@
+## [8.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v7.1.0...v8.0.0) (2026-03-11)
+
+### ⚠ BREAKING CHANGES
+
+* CHANGE
+
+### Features
+
+* add multimodal configuration support with validation and default settings ([fd9dbc2](https://github.com/Whisper-AI-App/marketplace/commit/fd9dbc22256e6e2b6688b820ee31d74f5ff99891))
+
 ## [7.1.0](https://github.com/Whisper-AI-App/marketplace/compare/v7.0.3...v7.1.0) (2026-02-27)
 
 ### Features
