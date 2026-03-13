@@ -1,5 +1,5 @@
 {
-    "version": "8.0.0",
+    "version": "8.1.0",
     "defaultRecommendedCard": "lfm2.5-1.2b-instruct-q6_k",
     "cards": {
         "qwen3.5-0.8b-q4_k_m": {
@@ -42,7 +42,7 @@
                     "sizeGB": 0.2
                 },
                 "vision": {
-                    "enabled": "$ramGB >= 4",
+                    "enabled": "$ramGB >= 2",
                     "maxWidth": "$ramGB >= 6 ? 672 : 336",
                     "maxHeight": "$ramGB >= 6 ? 672 : 336",
                     "imageMinTokens": 128,
