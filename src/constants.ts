@@ -7,6 +7,8 @@ export const DEFAULT_SAMPLING = {
 	top_p: 0.95,
 	min_p: 0.05,
 	penalty_repeat: 1.0,
+	penalty_freq: 0.0,
+	penalty_present: 0.0,
 	penalty_last_n: 64,
 	seed: -1,
 } as const;

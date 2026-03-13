@@ -70,6 +70,8 @@ export interface SamplingParams {
 	top_p?: ExprOr<number>; // Default: 0.95
 	min_p?: ExprOr<number>; // Default: 0.05
 	penalty_repeat?: ExprOr<number>; // Default: 1.0 (llama.rn uses penalty_repeat, not repeat_penalty)
+	penalty_freq?: ExprOr<number>; // Default: 0.0 (disabled). Penalizes tokens by frequency.
+	penalty_present?: ExprOr<number>; // Default: 0.0 (disabled). Flat penalty for any previously seen token.
 	penalty_last_n?: ExprOr<number>; // Default: 64 (tokens to consider for penalty)
 	seed?: ExprOr<number>; // Default: -1 (random)
 }
@@ -224,6 +226,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 					top_k: 20,
 					top_p: 0.8,
 					penalty_repeat: 1.0,
+					penalty_present: 2.0,
 					penalty_last_n: 64,
 					seed: 0,
 				},
@@ -361,6 +364,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 					top_k: 20,
 					top_p: 0.8,
 					penalty_repeat: 1.0,
+					penalty_present: 1.5,
 					penalty_last_n: 64,
 					seed: 0,
 				},

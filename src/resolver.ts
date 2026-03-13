@@ -111,6 +111,8 @@ export async function resolveRuntimeConfig(
 				rawRuntime?.sampling?.top_p ?? DEFAULT_RUNTIME_CONFIG.sampling.top_p,
 			min_p: rawRuntime?.sampling?.min_p,
 			penalty_repeat: rawRuntime?.sampling?.penalty_repeat,
+			penalty_freq: rawRuntime?.sampling?.penalty_freq,
+			penalty_present: rawRuntime?.sampling?.penalty_present,
 			penalty_last_n: rawRuntime?.sampling?.penalty_last_n,
 			seed: rawRuntime?.sampling?.seed,
 		},
