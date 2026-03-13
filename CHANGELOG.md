@@ -1,3 +1,11 @@
+## [8.1.1](https://github.com/Whisper-AI-App/marketplace/compare/v8.1.0...v8.1.1) (2026-03-13)
+
+### Bug Fixes
+
+* broken `defaultRecommendedCard` value ([bddc7a7](https://github.com/Whisper-AI-App/marketplace/commit/bddc7a7cb2e8c0c5dcd73dcf25f5e06f662113b5))
+* temp disable small models while beta testing qwen3.5-0.8b-q4_k_m ([ee1acbe](https://github.com/Whisper-AI-App/marketplace/commit/ee1acbe468f4695b535509c226ac5e9e1e0c0562))
+* updated tests to be agnostic of card content ([afad519](https://github.com/Whisper-AI-App/marketplace/commit/afad519cd80ff505f84dc525e5b72f6ceb60ad5c))
+
 ## [8.1.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.0.0...v8.1.0) (2026-03-13)
 
 ### Features
