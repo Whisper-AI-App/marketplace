@@ -246,92 +246,92 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 			},
 		},
 
-		"lfm2.5-1.2b-instruct-q6_k": {
-			name: "Whisper AI (LFM2.5 1.2B I Q6_K)",
-			type: "gguf",
-			sourceUrl:
-				"https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct-GGUF/resolve/main/LFM2.5-1.2B-Instruct-Q6_K.gguf",
-			sizeGB: 0.96,
-			parametersB: 1.2,
-			ramGB: 1.5,
-			systemMessage: {
-				template:
-					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
-				defaultTemplateValues: {
-					date_time_string: templateVariables.date_time_string.defaultValue,
-				},
-			},
-			runtime: {
-				// Context window: scales linearly with RAM (1.5GB = 1024, 3GB = 2048, etc.), floor of 512
-				n_ctx: "$max([512, $round($ramGB * 1024 / 1.5)])",
+		// "lfm2.5-1.2b-instruct-q6_k": {
+		// 	name: "Whisper AI (LFM2.5 1.2B I Q6_K)",
+		// 	type: "gguf",
+		// 	sourceUrl:
+		// 		"https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct-GGUF/resolve/main/LFM2.5-1.2B-Instruct-Q6_K.gguf",
+		// 	sizeGB: 0.96,
+		// 	parametersB: 1.2,
+		// 	ramGB: 1.5,
+		// 	systemMessage: {
+		// 		template:
+		// 			"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+		// 		defaultTemplateValues: {
+		// 			date_time_string: templateVariables.date_time_string.defaultValue,
+		// 		},
+		// 	},
+		// 	runtime: {
+		// 		// Context window: scales linearly with RAM (1.5GB = 1024, 3GB = 2048, etc.), floor of 512
+		// 		n_ctx: "$max([512, $round($ramGB * 1024 / 1.5)])",
 
-				// GPU layers: iOS has good Metal support, Android GPU can be unstable
-				n_gpu_layers: '$platform = "ios" ? 99 : 0',
+		// 		// GPU layers: iOS has good Metal support, Android GPU can be unstable
+		// 		n_gpu_layers: '$platform = "ios" ? 99 : 0',
 
-				// Thread count: target ~50% of cores to use performance cores only
-				n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
+		// 		// Thread count: target ~50% of cores to use performance cores only
+		// 		n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
 
-				// Flash attention: enable on iOS with sufficient RAM for performance boost
-				flash_attn: '$platform = "ios" and $ramGB >= 4',
+		// 		// Flash attention: enable on iOS with sufficient RAM for performance boost
+		// 		flash_attn: '$platform = "ios" and $ramGB >= 4',
 
-				// KV cache quantization: major memory savings with minimal quality loss
-				// <4GB: q4_0 (aggressive), 4-8GB: q8_0 (balanced), >8GB: f16 (full precision)
-				cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
-				cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+		// 		// KV cache quantization: major memory savings with minimal quality loss
+		// 		// <4GB: q4_0 (aggressive), 4-8GB: q8_0 (balanced), >8GB: f16 (full precision)
+		// 		cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+		// 		cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
 
-				n_predict: -1,
+		// 		n_predict: -1,
 
-				sampling: {
-					temperature: 0.7,
-					top_k: 40,
-					top_p: 0.95,
-					penalty_repeat: 1,
-					penalty_last_n: 64,
-					seed: 0,
-				},
-				stop: ["<|im_end|>"],
-				roles: {
-					user: "user",
-					assistant: "assistant",
-					system: "system",
-				},
-			},
-		},
+		// 		sampling: {
+		// 			temperature: 0.7,
+		// 			top_k: 40,
+		// 			top_p: 0.95,
+		// 			penalty_repeat: 1,
+		// 			penalty_last_n: 64,
+		// 			seed: 0,
+		// 		},
+		// 		stop: ["<|im_end|>"],
+		// 		roles: {
+		// 			user: "user",
+		// 			assistant: "assistant",
+		// 			system: "system",
+		// 		},
+		// 	},
+		// },
 
-		"qwen3.5-2b-q4_k_m": {
-			name: "Whisper AI Chat (Qwen3.5 2B Q4_K_M)",
-			type: "gguf",
-			sourceUrl:
-				"https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-Q4_K_M.gguf",
-			sizeGB: 1.28,
-			parametersB: 2,
-			ramGB: 3,
-			systemMessage: {
-				template:
-					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
-				defaultTemplateValues: {
-					date_time_string: templateVariables.date_time_string.defaultValue,
-				},
-			},
-			runtime: {
-				n_ctx: "$max([512, $round($ramGB * 1024 / 3)])",
-				n_gpu_layers: '$platform = "ios" ? 99 : 0',
-				n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
-				flash_attn: '$platform = "ios" and $ramGB >= 4',
-				cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
-				cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
-				n_predict: -1,
-				sampling: {
-					temperature: 0.7,
-					top_k: 20,
-					top_p: 0.8,
-					penalty_repeat: 1.0,
-					penalty_last_n: 64,
-					seed: 0,
-				},
-				stop: ["<|im_end|>", "<|endoftext|>"],
-			},
-		},
+		// "qwen3.5-2b-q4_k_m": {
+		// 	name: "Whisper AI Chat (Qwen3.5 2B Q4_K_M)",
+		// 	type: "gguf",
+		// 	sourceUrl:
+		// 		"https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-Q4_K_M.gguf",
+		// 	sizeGB: 1.28,
+		// 	parametersB: 2,
+		// 	ramGB: 3,
+		// 	systemMessage: {
+		// 		template:
+		// 			"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+		// 		defaultTemplateValues: {
+		// 			date_time_string: templateVariables.date_time_string.defaultValue,
+		// 		},
+		// 	},
+		// 	runtime: {
+		// 		n_ctx: "$max([512, $round($ramGB * 1024 / 3)])",
+		// 		n_gpu_layers: '$platform = "ios" ? 99 : 0',
+		// 		n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
+		// 		flash_attn: '$platform = "ios" and $ramGB >= 4',
+		// 		cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+		// 		cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+		// 		n_predict: -1,
+		// 		sampling: {
+		// 			temperature: 0.7,
+		// 			top_k: 20,
+		// 			top_p: 0.8,
+		// 			penalty_repeat: 1.0,
+		// 			penalty_last_n: 64,
+		// 			seed: 0,
+		// 		},
+		// 		stop: ["<|im_end|>", "<|endoftext|>"],
+		// 	},
+		// },
 
 		"qwen3.5-4b-q4_k_m": {
 			name: "Whisper AI Vision (Qwen3.5 4B Q4_K_M)",
