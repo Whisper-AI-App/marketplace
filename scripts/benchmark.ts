@@ -29,15 +29,27 @@ function promptChoice(question: string, choices: string[]): Promise<string> {
 	});
 }
 
+// ─── Device profiles ─────────────────────────────────────────
+// Simulate constrained hardware to benchmark performance as experienced by real users.
+// Values are passed directly to nanotune's --threads, --gpu-layers, --ctx-size flags.
+const DEVICE_PROFILES: Record<string, { label: string; threads: number; gpuLayers: number; ctxSize: number }> = {
+	"phone-4gb": { label: "Phone (4 GB RAM)", threads: 4, gpuLayers: 0, ctxSize: 2048 },
+	"phone-6gb": { label: "Phone (6 GB RAM)", threads: 4, gpuLayers: 0, ctxSize: 4096 },
+	"phone-8gb": { label: "Phone (8 GB RAM)", threads: 6, gpuLayers: 0, ctxSize: 4096 },
+	"tablet-8gb": { label: "Tablet (8 GB RAM)", threads: 6, gpuLayers: 0, ctxSize: 8192 },
+};
+
 // Parse CLI args
 const args = process.argv.slice(2);
 const modelIdx = args.indexOf("--model");
 const presetIdx = args.indexOf("--preset");
 const maxTokensIdx = args.indexOf("--max-tokens");
+const deviceProfileIdx = args.indexOf("--device-profile");
 
 let modelName = modelIdx !== -1 ? args[modelIdx + 1] : undefined;
 const preset = presetIdx !== -1 ? args[presetIdx + 1] : undefined;
 const maxTokens = maxTokensIdx !== -1 ? args[maxTokensIdx + 1] : undefined;
+const deviceProfileName = deviceProfileIdx !== -1 ? args[deviceProfileIdx + 1] : undefined;
 
 const availableModels = Object.keys(whisperLLMCardsJson.cards);
 
@@ -57,6 +69,15 @@ if (preset && !["low", "medium", "high", "ultra"].includes(preset)) {
 	process.exit(1);
 }
 
+if (deviceProfileName && !DEVICE_PROFILES[deviceProfileName]) {
+	console.error(
+		`Error: Unknown device profile "${deviceProfileName}". Available: ${Object.keys(DEVICE_PROFILES).join(", ")}`,
+	);
+	process.exit(1);
+}
+
+const deviceProfile = deviceProfileName ? DEVICE_PROFILES[deviceProfileName] : undefined;
+
 const card = whisperLLMCardsJson.cards[modelName];
 
 // Print model metadata
@@ -65,6 +86,9 @@ console.log(`Name:       ${card.name}`);
 console.log(`Parameters: ${card.parametersB}B`);
 console.log(`Size:       ${card.sizeGB} GB`);
 console.log(`Source:     ${card.sourceUrl}`);
+if (deviceProfile) {
+	console.log(`Device:     ${deviceProfile.label} (threads=${deviceProfile.threads}, gpu=${deviceProfile.gpuLayers}, ctx=${deviceProfile.ctxSize})`);
+}
 console.log("----------------------\n");
 
 // Set up .nanotune directory
@@ -152,11 +176,18 @@ copyFileSync(testsSource, testsDest);
 // Note: nanotune presets override --max-tokens entirely (high = 150 tokens),
 // so we only use a preset when explicitly requested. Otherwise we pass
 // --max-tokens directly to avoid output truncation.
+// Device profiles pass hardware constraints (threads, gpu-layers, ctx-size)
+// directly — these are NOT overridden by presets.
 const spawnArgs = ["nanotune", "benchmark"];
 if (preset) {
 	spawnArgs.push("--preset", preset);
 }
 spawnArgs.push("--max-tokens", maxTokens ?? "2048");
+if (deviceProfile) {
+	spawnArgs.push("--threads", String(deviceProfile.threads));
+	spawnArgs.push("--gpu-layers", String(deviceProfile.gpuLayers));
+	spawnArgs.push("--ctx-size", String(deviceProfile.ctxSize));
+}
 
 console.log(`Running: npx ${spawnArgs.join(" ")}\n`);
 

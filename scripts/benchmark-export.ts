@@ -7,6 +7,11 @@ const rootDir = resolve(__dirname, "..");
 const nanotuneBenchDir = resolve(rootDir, ".nanotune", "benchmarks");
 const exportBaseDir = resolve(rootDir, "benchmarks", "results");
 
+// Optional --device-profile arg to stamp into exported results
+const args = process.argv.slice(2);
+const dpIdx = args.indexOf("--device-profile");
+const deviceProfile = dpIdx !== -1 ? args[dpIdx + 1] : undefined;
+
 // Find the latest benchmark JSON result
 let files: string[];
 try {
@@ -44,6 +49,11 @@ mkdirSync(exportDir, { recursive: true });
 // Sanitise the model field — strip local path, keep only filename
 if (resultData.model) {
 	resultData.model = basename(resultData.model);
+}
+
+// Stamp device profile if provided
+if (deviceProfile) {
+	resultData.deviceProfile = deviceProfile;
 }
 
 // Write sanitised JSON (not a raw copy)

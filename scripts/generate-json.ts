@@ -27,10 +27,31 @@ function loadBenchmarks(cardKey: string): BenchmarkSummary[] {
 			fs.readFileSync(resolve(cardBenchDir, file), "utf-8"),
 		);
 
+		// Compute perf averages from per-test results when available
+		const results: Array<Record<string, unknown>> = raw.results ?? [];
+		const tokPerSecValues = results
+			.map((r) => r.tokensPerSecond as number | undefined)
+			.filter((v): v is number => typeof v === "number");
+		const ttftValues = results
+			.map((r) => r.ttftMs as number | undefined)
+			.filter((v): v is number => typeof v === "number");
+
+		const avgTokensPerSec = tokPerSecValues.length > 0
+			? Math.round((tokPerSecValues.reduce((a, b) => a + b, 0) / tokPerSecValues.length) * 100) / 100
+			: undefined;
+		const avgTtftMs = ttftValues.length > 0
+			? Math.round(ttftValues.reduce((a, b) => a + b, 0) / ttftValues.length)
+			: undefined;
+
 		// Cull to summary-only: strip results[], failures[], and model path
 		const culled: BenchmarkSummary = {
 			timestamp: raw.timestamp,
-			summary: raw.summary,
+			...(raw.deviceProfile ? { deviceProfile: raw.deviceProfile } : {}),
+			summary: {
+				...raw.summary,
+				...(avgTokensPerSec !== undefined ? { avgTokensPerSec } : {}),
+				...(avgTtftMs !== undefined ? { avgTtftMs } : {}),
+			},
 			categories: raw.categories,
 			reportUrl: `${repoUrl}/blob/main/benchmarks/results/${cardKey}/${file}`,
 		};

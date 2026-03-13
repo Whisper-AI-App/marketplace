@@ -174,6 +174,7 @@ function generateSummaryCard(data: {
 		avgLatencyMs: number;
 		avgJudgeScore: number;
 		judgeModel: string;
+		avgTokensPerSecond?: number;
 	};
 }): string {
 	const { summary } = data;
@@ -191,11 +192,13 @@ function generateSummaryCard(data: {
 	// Pass rate colour
 	const rateColour = passPercent >= 80 ? COLOURS.success : passPercent >= 50 ? "#eab308" : COLOURS.danger;
 
+	const tokPerSec = summary.avgTokensPerSecond != null ? `${summary.avgTokensPerSecond}` : "—";
+
 	const stats = [
-		{ label: "Tests", value: `${summary.total}` },
 		{ label: "Passed", value: `${summary.passed}` },
 		{ label: "Failed", value: `${summary.failed}` },
 		{ label: "Judge Score", value: `${summary.avgJudgeScore}/10` },
+		{ label: "Avg tok/s", value: tokPerSec },
 	];
 
 	const statWidth = (width - padding * 2) / stats.length;
@@ -215,6 +218,63 @@ function generateSummaryCard(data: {
 <text x="${width - padding}" y="${padding + 48}" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="${COLOURS.textLight}">pass rate</text>
 <line x1="${padding}" y1="120" x2="${width - padding}" y2="120" stroke="${COLOURS.border}" stroke-width="1" />
 ${statsSvg}
+</svg>`;
+}
+
+// ─── Latency by Category Chart ───────────────────────────────
+
+function generateLatencyChart(data: {
+	model: string;
+	results: Array<{ category: string; latencyMs: number }>;
+}): string {
+	// Compute average latency per category
+	const categoryLatencies: Record<string, { total: number; count: number }> = {};
+	for (const r of data.results) {
+		if (!categoryLatencies[r.category]) {
+			categoryLatencies[r.category] = { total: 0, count: 0 };
+		}
+		categoryLatencies[r.category].total += r.latencyMs;
+		categoryLatencies[r.category].count += 1;
+	}
+
+	const entries = Object.entries(categoryLatencies).map(([cat, { total, count }]) => ({
+		category: cat,
+		avgMs: Math.round(total / count),
+	}));
+
+	const maxMs = Math.max(...entries.map((e) => e.avgMs));
+	const barHeight = 32;
+	const gap = 12;
+	const labelWidth = 180;
+	const barMaxWidth = 320;
+	const padding = 24;
+	const titleHeight = 72;
+	const width = labelWidth + barMaxWidth + padding * 2 + 80;
+	const height = titleHeight + entries.length * (barHeight + gap) + padding * 2;
+
+	let bars = "";
+	entries.forEach(({ category, avgMs }, i) => {
+		const y = titleHeight + padding + i * (barHeight + gap);
+		const barWidth = maxMs > 0 ? Math.round((avgMs / maxMs) * barMaxWidth) : 0;
+		const label = category.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+		// Background bar
+		bars += `<rect x="${labelWidth + padding}" y="${y}" width="${barMaxWidth}" height="${barHeight}" rx="6" fill="${COLOURS.bgSubtle}" />`;
+		// Latency bar
+		if (barWidth > 0) {
+			bars += `<rect x="${labelWidth + padding}" y="${y}" width="${barWidth}" height="${barHeight}" rx="6" fill="${COLOURS.primaryLight}" />`;
+		}
+		// Label
+		bars += `<text x="${labelWidth + padding - 12}" y="${y + barHeight / 2 + 5}" text-anchor="end" font-family="system-ui, sans-serif" font-size="13" fill="${COLOURS.text}">${escapeXml(label)}</text>`;
+		// Value
+		bars += `<text x="${labelWidth + padding + barMaxWidth + 8}" y="${y + barHeight / 2 + 5}" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="${COLOURS.text}">${avgMs}ms</text>`;
+	});
+
+	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}">
+<rect width="${width}" height="${height}" fill="${COLOURS.bg}" rx="12" />
+<text x="${padding}" y="${padding + 20}" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="${COLOURS.text}">Average Latency by Category</text>
+<text x="${padding}" y="${padding + 38}" font-family="system-ui, sans-serif" font-size="12" fill="${COLOURS.textLight}">${escapeXml(data.model)}</text>
+${bars}
 </svg>`;
 }
 
@@ -280,6 +340,15 @@ for (const modelDir of modelDirs) {
 		generateSummaryCard(chartData),
 	);
 	console.log(`  Generated: benchmarks/results/${modelDir}/charts/summary.svg`);
+
+	// Latency chart (requires per-test results with latencyMs)
+	if (Array.isArray(raw.results) && raw.results.length > 0) {
+		writeFileSync(
+			resolve(chartsDir, "latency.svg"),
+			generateLatencyChart({ model: modelLabel, results: raw.results }),
+		);
+		console.log(`  Generated: benchmarks/results/${modelDir}/charts/latency.svg`);
+	}
 
 	console.log(`\nCharts generated for ${modelDir}`);
 }

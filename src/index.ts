@@ -158,6 +158,7 @@ export interface MultimodalConfig {
  */
 export interface BenchmarkSummary {
 	timestamp: string;
+	deviceProfile?: string; // e.g. "phone-4gb" — the hardware profile used
 	summary: {
 		total: number;
 		passed: number;
@@ -166,6 +167,9 @@ export interface BenchmarkSummary {
 		avgLatencyMs: number;
 		avgJudgeScore: number;
 		judgeModel: string;
+		// Performance metrics (populated when nanotune captures them from llama.cpp)
+		avgTokensPerSec?: number;
+		avgTtftMs?: number;
 	};
 	categories: Record<string, { passed: number; total: number }>;
 	reportUrl?: string; // URL to full benchmark report for future expansion
