@@ -52,8 +52,7 @@
                         "avgTokensPerSecond": 67.43,
                         "avgTtftMs": 463,
                         "avgJudgeScore": 8.4,
-                        "judgeModel": "qwen3.5:397b-cloud",
-                        "avgTokensPerSec": 67.43
+                        "judgeModel": "qwen3.5:397b-cloud"
                     },
                     "categories": {
                         "factual-knowledge": {

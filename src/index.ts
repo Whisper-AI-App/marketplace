@@ -168,7 +168,7 @@ export interface BenchmarkSummary {
 		avgJudgeScore: number;
 		judgeModel: string;
 		// Performance metrics (populated when nanotune captures them from llama.cpp)
-		avgTokensPerSec?: number;
+		avgTokensPerSecond?: number;
 		avgTtftMs?: number;
 	};
 	categories: Record<string, { passed: number; total: number }>;
