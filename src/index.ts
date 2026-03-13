@@ -195,60 +195,9 @@ export function processSystemMessage(
 export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 	version: VERSION,
 
-	defaultRecommendedCard: "qwen3.5-0.8b-q4_k_m",
+	defaultRecommendedCard: "qwen3.5-2b-q4_k_m",
 
 	cards: {
-		"qwen3.5-0.8b-q4_k_m": {
-			name: "Whisper AI Vision (Qwen3.5 0.8B Q4_K_M)",
-			type: "gguf",
-			sourceUrl:
-				"https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/Qwen3.5-0.8B-Q4_K_M.gguf",
-			sizeGB: 0.53,
-			parametersB: 0.8,
-			ramGB: 1.2,
-			systemMessage: {
-				template:
-					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
-				defaultTemplateValues: {
-					date_time_string: templateVariables.date_time_string.defaultValue,
-				},
-			},
-			runtime: {
-				n_ctx: "$max([512, $round($ramGB * 1024 / 1.2)])",
-				n_gpu_layers: '$platform = "ios" ? 99 : 0',
-				n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
-				flash_attn: '$platform = "ios" and $ramGB >= 4',
-				cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
-				cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
-				n_predict: -1,
-				sampling: {
-					temperature: 0.7,
-					top_k: 20,
-					top_p: 0.8,
-					penalty_repeat: 1.0,
-					penalty_present: 2.0,
-					penalty_last_n: 64,
-					seed: 0,
-				},
-				stop: ["<|im_end|>", "<|endoftext|>"],
-			},
-			multimodal: {
-				mmproj: {
-					sourceUrl:
-						"https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/mmproj-F16.gguf",
-					sizeGB: 0.2,
-				},
-				vision: {
-					enabled: "$ramGB >= 2",
-					maxWidth: "$ramGB >= 6 ? 672 : 336",
-					maxHeight: "$ramGB >= 6 ? 672 : 336",
-					imageMinTokens: 128,
-					imageMaxTokens: "$ramGB >= 6 ? 512 : 256",
-					supportedFormats: ["jpeg", "png", "webp"],
-				},
-			},
-		},
-
 		// "lfm2.5-1.2b-instruct-q6_k": {
 		// 	name: "Whisper AI (LFM2.5 1.2B I Q6_K)",
 		// 	type: "gguf",
@@ -301,40 +250,55 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 		// 	},
 		// },
 
-		// "qwen3.5-2b-q4_k_m": {
-		// 	name: "Whisper AI Chat (Qwen3.5 2B Q4_K_M)",
-		// 	type: "gguf",
-		// 	sourceUrl:
-		// 		"https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-Q4_K_M.gguf",
-		// 	sizeGB: 1.28,
-		// 	parametersB: 2,
-		// 	ramGB: 3,
-		// 	systemMessage: {
-		// 		template:
-		// 			"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
-		// 		defaultTemplateValues: {
-		// 			date_time_string: templateVariables.date_time_string.defaultValue,
-		// 		},
-		// 	},
-		// 	runtime: {
-		// 		n_ctx: "$max([512, $round($ramGB * 1024 / 3)])",
-		// 		n_gpu_layers: '$platform = "ios" ? 99 : 0',
-		// 		n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
-		// 		flash_attn: '$platform = "ios" and $ramGB >= 4',
-		// 		cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
-		// 		cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
-		// 		n_predict: -1,
-		// 		sampling: {
-		// 			temperature: 0.7,
-		// 			top_k: 20,
-		// 			top_p: 0.8,
-		// 			penalty_repeat: 1.0,
-		// 			penalty_last_n: 64,
-		// 			seed: 0,
-		// 		},
-		// 		stop: ["<|im_end|>", "<|endoftext|>"],
-		// 	},
-		// },
+		"qwen3.5-2b-q4_k_m": {
+			name: "Whisper AI Vision (Qwen3.5 2B Q4_K_M)",
+			type: "gguf",
+			sourceUrl:
+				"https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-Q4_K_M.gguf",
+			sizeGB: 1.28,
+			parametersB: 2,
+			ramGB: 3,
+			systemMessage: {
+				template:
+					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
+				defaultTemplateValues: {
+					date_time_string: templateVariables.date_time_string.defaultValue,
+				},
+			},
+			runtime: {
+				n_ctx: "$max([512, $round($ramGB * 1024 / 3)])",
+				n_gpu_layers: '$platform = "ios" ? 99 : 0',
+				n_threads: "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
+				flash_attn: '$platform = "ios" and $ramGB >= 4',
+				cache_type_k: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+				cache_type_v: '$ramGB < 4 ? "q4_0" : $ramGB < 8 ? "q8_0" : "f16"',
+				n_predict: -1,
+				sampling: {
+					temperature: 0.7,
+					top_k: 20,
+					top_p: 0.8,
+					penalty_repeat: 1.0,
+					penalty_last_n: 64,
+					seed: 0,
+				},
+				stop: ["<|im_end|>", "<|endoftext|>"],
+			},
+			multimodal: {
+				mmproj: {
+					sourceUrl:
+						"https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/mmproj-F16.gguf",
+					sizeGB: 0.65,
+				},
+				vision: {
+					enabled: "$ramGB >= 4",
+					maxWidth: "$ramGB >= 8 ? 672 : 336",
+					maxHeight: "$ramGB >= 8 ? 672 : 336",
+					imageMinTokens: 128,
+					imageMaxTokens: "$ramGB >= 8 ? 768 : 256",
+					supportedFormats: ["jpeg", "png", "webp"],
+				},
+			},
+		},
 
 		"qwen3.5-4b-q4_k_m": {
 			name: "Whisper AI Vision (Qwen3.5 4B Q4_K_M)",
@@ -363,10 +327,11 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 					temperature: 0.7,
 					top_k: 20,
 					top_p: 0.8,
+					min_p: 0,
 					penalty_repeat: 1.0,
 					penalty_present: 1.5,
 					penalty_last_n: 64,
-					seed: 0,
+					seed: -1,
 				},
 				stop: ["<|im_end|>", "<|endoftext|>"],
 			},
