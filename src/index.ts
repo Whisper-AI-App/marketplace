@@ -193,7 +193,7 @@ export function processSystemMessage(
 export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 	version: VERSION,
 
-	defaultRecommendedCard: "lfm2.5-1.2b-instruct-q6_k",
+	defaultRecommendedCard: "qwen3.5-0.8b-q4_k_m",
 
 	cards: {
 		"qwen3.5-0.8b-q4_k_m": {
