@@ -39,7 +39,88 @@
                     "assistant": "assistant",
                     "system": "system"
                 }
-            }
+            },
+            "benchmarks": [
+                {
+                    "timestamp": "2026-03-13T13:29:09.461Z",
+                    "summary": {
+                        "total": 79,
+                        "passed": 71,
+                        "failed": 8,
+                        "passRate": 0.8987341772151899,
+                        "avgLatencyMs": 1500,
+                        "avgJudgeScore": 8.8,
+                        "judgeModel": "qwen3.5:397b-cloud"
+                    },
+                    "categories": {
+                        "factual-knowledge": {
+                            "passed": 8,
+                            "total": 8
+                        },
+                        "reasoning": {
+                            "passed": 6,
+                            "total": 8
+                        },
+                        "language": {
+                            "passed": 4,
+                            "total": 5
+                        },
+                        "instruction-following": {
+                            "passed": 5,
+                            "total": 5
+                        },
+                        "summarization": {
+                            "passed": 3,
+                            "total": 3
+                        },
+                        "creative-writing": {
+                            "passed": 4,
+                            "total": 4
+                        },
+                        "advice": {
+                            "passed": 4,
+                            "total": 4
+                        },
+                        "explanation": {
+                            "passed": 5,
+                            "total": 5
+                        },
+                        "task-completion": {
+                            "passed": 3,
+                            "total": 4
+                        },
+                        "safety": {
+                            "passed": 7,
+                            "total": 7
+                        },
+                        "advanced-reasoning": {
+                            "passed": 3,
+                            "total": 6
+                        },
+                        "code": {
+                            "passed": 5,
+                            "total": 5
+                        },
+                        "math": {
+                            "passed": 4,
+                            "total": 4
+                        },
+                        "structured-output": {
+                            "passed": 4,
+                            "total": 4
+                        },
+                        "nuance": {
+                            "passed": 3,
+                            "total": 4
+                        },
+                        "long-form": {
+                            "passed": 3,
+                            "total": 3
+                        }
+                    },
+                    "reportUrl": "https://github.com/Whisper-AI-App/marketplace/blob/main/benchmarks/results/lfm2.5-1.2b-instruct-q6_k/benchmark-2026-03-13T13-29-09-461Z.json"
+                }
+            ]
         },
         "qwen3.5-2b-q4_k_m": {
             "name": "Whisper AI Chat (Qwen3.5 2B Q4_K_M)",

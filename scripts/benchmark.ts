@@ -148,15 +148,15 @@ if (!existsSync(testsSource)) {
 
 copyFileSync(testsSource, testsDest);
 
-// Build spawn args — default to "high" preset unless explicitly specified
+// Build spawn args
+// Note: nanotune presets override --max-tokens entirely (high = 150 tokens),
+// so we only use a preset when explicitly requested. Otherwise we pass
+// --max-tokens directly to avoid output truncation.
 const spawnArgs = ["nanotune", "benchmark"];
-spawnArgs.push("--preset", preset ?? "high");
-if (maxTokens) {
-	spawnArgs.push("--max-tokens", maxTokens);
-} else if (!preset) {
-	// Default to 2048 tokens when no preset explicitly specified
-	spawnArgs.push("--max-tokens", "2048");
+if (preset) {
+	spawnArgs.push("--preset", preset);
 }
+spawnArgs.push("--max-tokens", maxTokens ?? "2048");
 
 console.log(`Running: npx ${spawnArgs.join(" ")}\n`);
 

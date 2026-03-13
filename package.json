@@ -27,7 +27,8 @@
 		"test": "ava",
 		"benchmark": "tsx scripts/benchmark.ts",
 		"benchmark:judge": "npx nanotune judge configure",
-		"benchmark:export": "tsx scripts/benchmark-export.ts"
+		"benchmark:export": "tsx scripts/benchmark-export.ts && tsx scripts/benchmark-charts.ts",
+		"benchmark:charts": "tsx scripts/benchmark-charts.ts"
 	},
 	"ava": {
 		"extensions": {

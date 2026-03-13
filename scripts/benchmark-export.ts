@@ -1,5 +1,5 @@
-import { readdirSync, copyFileSync, mkdirSync, readFileSync } from "node:fs";
-import { resolve, dirname } from "node:path";
+import { readdirSync, copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { resolve, dirname, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -41,8 +41,14 @@ const modelName = modelRaw.split("/").pop()?.replace(/\.gguf$/i, "").toLowerCase
 const exportDir = resolve(exportBaseDir, modelName);
 mkdirSync(exportDir, { recursive: true });
 
-// Copy both JSON and MD
-copyFileSync(resolve(nanotuneBenchDir, latestJson), resolve(exportDir, latestJson));
+// Sanitise the model field — strip local path, keep only filename
+if (resultData.model) {
+	resultData.model = basename(resultData.model);
+}
+
+// Write sanitised JSON (not a raw copy)
+const exportJsonPath = resolve(exportDir, latestJson);
+writeFileSync(exportJsonPath, JSON.stringify(resultData, null, 2));
 console.log(`Exported: benchmarks/results/${modelName}/${latestJson}`);
 
 try {

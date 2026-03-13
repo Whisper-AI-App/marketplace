@@ -41,6 +41,7 @@ export interface WhisperLLMCard {
 	};
 	runtime?: RuntimeConfig; // Optional runtime config for llama.rn inference
 	multimodal?: MultimodalConfig; // Optional multimodal capability declaration
+	benchmarks?: BenchmarkSummary[]; // Optional benchmark results (summary only)
 }
 
 export interface LLMCardCollection {
@@ -146,6 +147,28 @@ export interface MultimodalConfig {
 	vision?: VisionConfig;
 	audio?: AudioConfig;
 	files?: FilesConfig;
+}
+
+// ─── Benchmark Types ─────────────────────────────────────────
+
+/**
+ * Summary-level benchmark result for embedding in a model card.
+ * Detailed per-test results are stored in the full benchmark JSON files
+ * under benchmarks/results/ and are stripped when building cards.json.
+ */
+export interface BenchmarkSummary {
+	timestamp: string;
+	summary: {
+		total: number;
+		passed: number;
+		failed: number;
+		passRate: number;
+		avgLatencyMs: number;
+		avgJudgeScore: number;
+		judgeModel: string;
+	};
+	categories: Record<string, { passed: number; total: number }>;
+	reportUrl?: string; // URL to full benchmark report for future expansion
 }
 
 // Re-export defaults from constants
