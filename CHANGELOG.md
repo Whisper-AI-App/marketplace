@@ -1,3 +1,9 @@
+## [8.2.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.1.1...v8.2.0) (2026-03-13)
+
+### Features
+
+* add presence/frequency penalty sampling params for Qwen3.5 loop prevention ([0dfad92](https://github.com/Whisper-AI-App/marketplace/commit/0dfad92b38342f38d09330ce17abd1a581254715))
+
 ## [8.1.1](https://github.com/Whisper-AI-App/marketplace/compare/v8.1.0...v8.1.1) (2026-03-13)
 
 ### Bug Fixes

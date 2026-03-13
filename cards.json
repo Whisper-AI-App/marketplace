@@ -1,5 +1,5 @@
 {
-    "version": "8.1.1",
+    "version": "8.2.0",
     "defaultRecommendedCard": "qwen3.5-0.8b-q4_k_m",
     "cards": {
         "qwen3.5-0.8b-q4_k_m": {
@@ -28,6 +28,7 @@
                     "top_k": 20,
                     "top_p": 0.8,
                     "penalty_repeat": 1,
+                    "penalty_present": 2,
                     "penalty_last_n": 64,
                     "seed": 0
                 },
@@ -81,6 +82,7 @@
                     "top_k": 20,
                     "top_p": 0.8,
                     "penalty_repeat": 1,
+                    "penalty_present": 1.5,
                     "penalty_last_n": 64,
                     "seed": 0
                 },
