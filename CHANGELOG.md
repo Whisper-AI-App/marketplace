@@ -1,3 +1,9 @@
+## [8.3.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.2.0...v8.3.0) (2026-03-13)
+
+### Features
+
+* beta try out qwen3.5-2b-q4_k_m over the 0.8b variant ([26700ef](https://github.com/Whisper-AI-App/marketplace/commit/26700ef99b57e74d6a98a2215de8ad1c795d8b7c))
+
 ## [8.2.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.1.1...v8.2.0) (2026-03-13)
 
 ### Features
