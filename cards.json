@@ -1,22 +1,22 @@
 {
-    "version": "8.3.0",
-    "defaultRecommendedCard": "qwen3.5-2b-q4_k_m",
+    "version": "8.4.0",
+    "defaultRecommendedCard": "lfm2.5-1.2b-instruct-q4_k_m",
     "cards": {
-        "qwen3.5-2b-q4_k_m": {
-            "name": "Whisper AI Vision (Qwen3.5 2B Q4_K_M)",
+        "lfm2.5-1.2b-instruct-q4_k_m": {
+            "name": "Whisper AI (LFM2.5 1.2B I Q4_K_M)",
             "type": "gguf",
-            "sourceUrl": "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/Qwen3.5-2B-Q4_K_M.gguf",
-            "sizeGB": 1.28,
-            "parametersB": 2,
-            "ramGB": 3,
+            "sourceUrl": "https://huggingface.co/LiquidAI/LFM2.5-1.2B-Instruct-GGUF/resolve/main/LFM2.5-1.2B-Instruct-Q4_K_M.gguf",
+            "sizeGB": 0.731,
+            "parametersB": 1.2,
+            "ramGB": 1.5,
             "systemMessage": {
-                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
+                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
                 "defaultTemplateValues": {
                     "date_time_string": "2026"
                 }
             },
             "runtime": {
-                "n_ctx": "$max([512, $round($ramGB * 1024 / 3)])",
+                "n_ctx": "$max([512, $round($ramGB * 1024 / 1.5)])",
                 "n_gpu_layers": "$platform = \"ios\" ? 99 : 0",
                 "n_threads": "$cpuCoreCount ? $max([2, $floor($cpuCoreCount * 0.5)]) : 1",
                 "flash_attn": "$platform = \"ios\" and $ramGB >= 4",
@@ -25,33 +25,19 @@
                 "n_predict": -1,
                 "sampling": {
                     "temperature": 0.7,
-                    "top_k": 20,
-                    "top_p": 0.8,
+                    "top_k": 40,
+                    "top_p": 0.95,
                     "penalty_repeat": 1,
                     "penalty_last_n": 64,
                     "seed": 0
                 },
                 "stop": [
-                    "<|im_end|>",
-                    "<|endoftext|>"
-                ]
-            },
-            "multimodal": {
-                "mmproj": {
-                    "sourceUrl": "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/mmproj-F16.gguf",
-                    "sizeGB": 0.65
-                },
-                "vision": {
-                    "enabled": "$ramGB >= 4",
-                    "maxWidth": "$ramGB >= 8 ? 672 : 336",
-                    "maxHeight": "$ramGB >= 8 ? 672 : 336",
-                    "imageMinTokens": 128,
-                    "imageMaxTokens": "$ramGB >= 8 ? 768 : 256",
-                    "supportedFormats": [
-                        "jpeg",
-                        "png",
-                        "webp"
-                    ]
+                    "<|im_end|>"
+                ],
+                "roles": {
+                    "user": "user",
+                    "assistant": "assistant",
+                    "system": "system"
                 }
             }
         },

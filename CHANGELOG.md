@@ -1,3 +1,9 @@
+## [8.4.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.3.0...v8.4.0) (2026-03-15)
+
+### Features
+
+* revert to more stable LFM2.5 1.2B Instruct default model, with Qwen3.5 4B for larger phones ([3d0c230](https://github.com/Whisper-AI-App/marketplace/commit/3d0c2308c49b56445d9ca3b34c216183b4509d17))
+
 ## [8.3.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.2.0...v8.3.0) (2026-03-13)
 
 ### Features
