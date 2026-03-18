@@ -261,42 +261,51 @@ test("default recommended card has runtime config", (t) => {
 	t.true(Array.isArray(card.runtime?.stop), "Default recommended card should have stop array");
 });
 
-// T009: Qwen3.5 card validation tests
+// Card-agnostic validation tests (not tied to specific card names)
 
-test("all 3 model cards exist", (t) => {
+test("at least one model card exists", (t) => {
 	const { cards } = whisperLLMCardsJson;
-	t.truthy(cards["lfm2.5-1.2b-instruct-q6_k"], "LFM2.5 1.2B should exist");
-	t.truthy(cards["qwen3.5-2b-q4_k_m"], "Qwen3.5 2B should exist");
-	t.truthy(cards["qwen3.5-4b-q4_k_m"], "Qwen3.5 4B should exist");
+	t.true(Object.keys(cards).length >= 1, "Should have at least one card");
 });
 
-test("Qwen3.5 2B card has correct fields", (t) => {
-	const card = whisperLLMCardsJson.cards["qwen3.5-2b-q4_k_m"];
-	t.truthy(card);
-	t.is(card.type, "gguf");
-	t.is(card.parametersB, 2);
-	t.is(card.ramGB, 3);
-	t.true(card.sourceUrl.includes("Qwen3.5-2B"));
-	t.truthy(card.runtime);
-	t.is(card.multimodal, undefined, "Qwen3.5 2B should have no multimodal");
+test("every card has required fields and valid types", (t) => {
+	const { cards } = whisperLLMCardsJson;
+
+	for (const [key, card] of Object.entries(cards) as [string, WhisperLLMCard][]) {
+		t.is(card.type, "gguf", `${key}: type should be gguf`);
+		t.is(typeof card.parametersB, "number", `${key}: parametersB should be number`);
+		t.is(typeof card.ramGB, "number", `${key}: ramGB should be number`);
+		t.is(typeof card.sourceUrl, "string", `${key}: sourceUrl should be string`);
+		t.truthy(card.runtime, `${key}: should have runtime config`);
+	}
 });
 
-test("Qwen3.5 4B card has multimodal config with mmproj", (t) => {
-	const card = whisperLLMCardsJson.cards["qwen3.5-4b-q4_k_m"];
-	t.truthy(card);
-	t.is(card.parametersB, 4);
-	t.truthy(card.multimodal);
-	t.truthy(card.multimodal?.mmproj);
-	t.true(card.multimodal!.mmproj!.sourceUrl.includes("mmproj"));
-	t.is(card.multimodal!.mmproj!.sizeGB, 0.66);
+test("cards with multimodal config have valid mmproj", (t) => {
+	const { cards } = whisperLLMCardsJson;
+	const multimodalCards = (Object.entries(cards) as [string, WhisperLLMCard][])
+		.filter(([, card]) => card.multimodal);
+
+	for (const [key, card] of multimodalCards) {
+		t.truthy(card.multimodal!.mmproj, `${key}: multimodal card should have mmproj`);
+		t.true(
+			card.multimodal!.mmproj!.sourceUrl.includes("mmproj"),
+			`${key}: mmproj sourceUrl should contain 'mmproj'`,
+		);
+		t.is(typeof card.multimodal!.mmproj!.sizeGB, "number", `${key}: mmproj sizeGB should be number`);
+	}
 });
 
-test("Qwen3.5 4B vision config has all required fields", (t) => {
-	const vision = whisperLLMCardsJson.cards["qwen3.5-4b-q4_k_m"].multimodal?.vision;
-	t.truthy(vision, "4B should have vision config");
-	t.truthy(vision!.enabled);
-	t.truthy(vision!.maxWidth);
-	t.truthy(vision!.maxHeight);
-	t.true(Array.isArray(vision!.supportedFormats));
-	t.true(vision!.supportedFormats!.includes("jpeg"));
+test("cards with vision config have all required fields", (t) => {
+	const { cards } = whisperLLMCardsJson;
+	const visionCards = (Object.entries(cards) as [string, WhisperLLMCard][])
+		.filter(([, card]) => card.multimodal?.vision);
+
+	for (const [key, card] of visionCards) {
+		const vision = card.multimodal!.vision!;
+		t.truthy(vision.enabled, `${key}: vision should be enabled`);
+		t.truthy(vision.maxWidth, `${key}: vision should have maxWidth`);
+		t.truthy(vision.maxHeight, `${key}: vision should have maxHeight`);
+		t.true(Array.isArray(vision.supportedFormats), `${key}: vision should have supportedFormats array`);
+		t.true(vision.supportedFormats!.includes("jpeg"), `${key}: vision should support jpeg`);
+	}
 });

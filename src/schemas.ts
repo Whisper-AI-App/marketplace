@@ -25,6 +25,8 @@ export const ResolvedSamplingSchema = z.object({
 	top_p: z.number().min(0).max(1),
 	min_p: z.number().min(0).max(1).optional(),
 	penalty_repeat: z.number().optional(),
+	penalty_freq: z.number().optional(),
+	penalty_present: z.number().optional(),
 	penalty_last_n: z.number().int().optional(),
 	seed: z.number().int().optional(),
 });

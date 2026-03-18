@@ -1,3 +1,35 @@
+## [8.4.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.3.0...v8.4.0) (2026-03-15)
+
+### Features
+
+* revert to more stable LFM2.5 1.2B Instruct default model, with Qwen3.5 4B for larger phones ([3d0c230](https://github.com/Whisper-AI-App/marketplace/commit/3d0c2308c49b56445d9ca3b34c216183b4509d17))
+
+## [8.3.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.2.0...v8.3.0) (2026-03-13)
+
+### Features
+
+* beta try out qwen3.5-2b-q4_k_m over the 0.8b variant ([26700ef](https://github.com/Whisper-AI-App/marketplace/commit/26700ef99b57e74d6a98a2215de8ad1c795d8b7c))
+
+## [8.2.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.1.1...v8.2.0) (2026-03-13)
+
+### Features
+
+* add presence/frequency penalty sampling params for Qwen3.5 loop prevention ([0dfad92](https://github.com/Whisper-AI-App/marketplace/commit/0dfad92b38342f38d09330ce17abd1a581254715))
+
+## [8.1.1](https://github.com/Whisper-AI-App/marketplace/compare/v8.1.0...v8.1.1) (2026-03-13)
+
+### Bug Fixes
+
+* broken `defaultRecommendedCard` value ([bddc7a7](https://github.com/Whisper-AI-App/marketplace/commit/bddc7a7cb2e8c0c5dcd73dcf25f5e06f662113b5))
+* temp disable small models while beta testing qwen3.5-0.8b-q4_k_m ([ee1acbe](https://github.com/Whisper-AI-App/marketplace/commit/ee1acbe468f4695b535509c226ac5e9e1e0c0562))
+* updated tests to be agnostic of card content ([afad519](https://github.com/Whisper-AI-App/marketplace/commit/afad519cd80ff505f84dc525e5b72f6ceb60ad5c))
+
+## [8.1.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.0.0...v8.1.0) (2026-03-13)
+
+### Features
+
+* beta test of qwen3.5-0.8b-q4_k_m ([3f71752](https://github.com/Whisper-AI-App/marketplace/commit/3f717528d1ecb4c39bf8abe8664380e8471d8fe1))
+
 ## [8.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v7.1.0...v8.0.0) (2026-03-11)
 
 ### ⚠ BREAKING CHANGES

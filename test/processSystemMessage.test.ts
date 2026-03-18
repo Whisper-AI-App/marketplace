@@ -207,12 +207,12 @@ test("processSystemMessage accepts Message array parameter", (t) => {
 test("processSystemMessage works with actual whisperLLMCardsJson data", (t) => {
 	const { cards, defaultRecommendedCard } = whisperLLMCardsJson;
 	const card = cards[defaultRecommendedCard];
+	t.truthy(card, "defaultRecommendedCard should reference an existing card");
 	const messages: Message[] = [];
 
 	const result = processSystemMessage(card, messages);
 
-	// Should process the actual template
-	t.true(result.includes("Whisper"));
+	// Should process the actual template without leftover placeholders
 	t.false(result.includes("{date_time_string}"));
 	t.true(result.length > 0);
 	t.is(typeof result, "string");
