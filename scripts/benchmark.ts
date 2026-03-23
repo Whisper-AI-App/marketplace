@@ -189,9 +189,9 @@ if (deviceProfile) {
 	spawnArgs.push("--ctx-size", String(deviceProfile.ctxSize));
 }
 
-console.log(`Running: npx ${spawnArgs.join(" ")}\n`);
+console.log(`Running: ${spawnArgs.join(" ")}\n`);
 
-const result = spawnSync("npx", spawnArgs, {
+const result = spawnSync(spawnArgs[0], spawnArgs.slice(1), {
 	cwd: rootDir,
 	stdio: "inherit",
 });
