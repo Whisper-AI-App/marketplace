@@ -1,5 +1,5 @@
 {
-    "version": "8.4.0",
+    "version": "8.5.0",
     "defaultRecommendedCard": "lfm2.5-1.2b-instruct-q4_k_m",
     "cards": {
         "lfm2.5-1.2b-instruct-q4_k_m": {

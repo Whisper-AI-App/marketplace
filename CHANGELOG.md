@@ -1,3 +1,17 @@
+## [8.5.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.4.0...v8.5.0) (2026-03-25)
+
+### Features
+
+* add nanotune benchmarking integration for local model quality testing ([8bcce47](https://github.com/Whisper-AI-App/marketplace/commit/8bcce474ac8141cf555c66454fbb41cbb627775c))
+* performance benchmarking ([d1fa7ef](https://github.com/Whisper-AI-App/marketplace/commit/d1fa7ef4f32c5474c3133e33658cd9e978dcb86d))
+* resolved merged changes from main branch ([600a6e2](https://github.com/Whisper-AI-App/marketplace/commit/600a6e2c5e17464f42cab8e2f0821162c487a8a2))
+
+### Bug Fixes
+
+* cards.json benchmark generation script ([ee75dbb](https://github.com/Whisper-AI-App/marketplace/commit/ee75dbb17368950b4e7de1cc084897b12af9d59a))
+* nanotune version bump ([48655ee](https://github.com/Whisper-AI-App/marketplace/commit/48655ee324f469ae2c26c86e30d3f1d264c8fb37))
+* nanotune version bump to fix downstream issue ([de0f3fb](https://github.com/Whisper-AI-App/marketplace/commit/de0f3fb50ee3ec1364964747b4231bc69bdfddf0))
+
 ## [8.4.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.3.0...v8.4.0) (2026-03-15)
 
 ### Features
