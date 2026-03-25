@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 260" width="520" height="260">
-<rect width="520" height="260" fill="#ffffff" rx="12" stroke="#e2e8f0" stroke-width="1" />
-<text x="32" y="52" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#1e293b">LFM2.5-1.2B-Instruct-Q6_K.gguf</text>
-<text x="32" y="72" font-family="system-ui, sans-serif" font-size="12" fill="#64748b">Benchmark — 13 Mar 2026 — Judge: qwen3.5:397b-cloud</text>
-<text x="488" y="62" text-anchor="end" font-family="system-ui, sans-serif" font-size="36" font-weight="800" fill="#22c55e">84%</text>
-<text x="488" y="80" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">pass rate</text>
-<line x1="32" y1="120" x2="488" y2="120" stroke="#e2e8f0" stroke-width="1" />
-<text x="89" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e293b">66</text><text x="89" y="190" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Passed</text><text x="203" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e293b">13</text><text x="203" y="190" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Failed</text><text x="317" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e293b">8.4/10</text><text x="317" y="190" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Judge Score</text><text x="431" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e293b">67.43</text><text x="431" y="190" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">Avg tok/s</text>
-</svg>

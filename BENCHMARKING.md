@@ -45,10 +45,10 @@ This stores your judge configuration locally in `.nanotune/` (gitignored).
 pnpm benchmark
 
 # Specify a model directly
-pnpm benchmark --model lfm2.5-1.2b-instruct-q6_k
+pnpm benchmark --model lfm2.5-1.2b-instruct-q4_k_m
 
 # Specify a hardware preset
-pnpm benchmark --model qwen3.5-2b-q4_k_m --preset low
+pnpm benchmark --model qwen3.5-4b-q4_k_m --preset low
 
 # Override max token output
 pnpm benchmark --model qwen3.5-4b-q4_k_m --max-tokens 1024
@@ -73,15 +73,14 @@ Specifying `--preset` explicitly uses that preset's own `max-tokens` limit unles
 
 ### Available models
 
-| Flag value                     | Name                                  | Parameters | Size    |
-| ------------------------------ | ------------------------------------- | ---------- | ------- |
-| `lfm2.5-1.2b-instruct-q6_k`   | Whisper AI (LFM2.5 1.2B I Q6_K)      | 1.2B       | 0.96 GB |
-| `qwen3.5-2b-q4_k_m`           | Whisper AI Chat (Qwen3.5 2B Q4_K_M)  | 2B         | 1.28 GB |
+| Flag value                     | Name                                   | Parameters | Size    |
+| ------------------------------ | -------------------------------------- | ---------- | ------- |
+| `lfm2.5-1.2b-instruct-q4_k_m` | Whisper AI (LFM2.5 1.2B I Q4_K_M)     | 1.2B       | 0.731 GB |
 | `qwen3.5-4b-q4_k_m`           | Whisper AI Vision (Qwen3.5 4B Q4_K_M) | 4B         | 2.74 GB |
 
 ## Test cases
 
-Test data lives in `benchmarks/tests.json`. All 50 tests use **`llm-judge`** matching — each response is sent to the judge model (Ollama `qwen3.5:397b-cloud`) for scoring against criteria like `helpful`, `accurate`, `concise`, and `safe`. Tests require a pass threshold of 7/10.
+Test data lives in `benchmarks/tests.json`. All 79 tests use **`llm-judge`** matching — each response is sent to the judge model (Ollama `qwen3.5:397b-cloud`) for scoring against criteria like `helpful`, `accurate`, `concise`, and `safe`. Tests require a pass threshold of 7/10.
 
 ## Reports
 
@@ -96,8 +95,8 @@ pnpm benchmark:export
 This copies the most recent JSON and Markdown reports into `benchmarks/results/<model-name>/`, e.g.:
 
 ```
-benchmarks/results/lfm2.5-1.2b-instruct-q6_k/benchmark-2026-03-11T15-02-10-183Z.json
-benchmarks/results/lfm2.5-1.2b-instruct-q6_k/benchmark-2026-03-11T15-02-10-183Z.md
+benchmarks/results/lfm2.5-1.2b-instruct-q4_k_m/benchmark-2026-03-11T15-02-10-183Z.json
+benchmarks/results/lfm2.5-1.2b-instruct-q4_k_m/benchmark-2026-03-11T15-02-10-183Z.md
 ```
 
 ## Scripts

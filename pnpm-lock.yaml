@@ -28,8 +28,8 @@ importers:
         specifier: 2.3.4
         version: 2.3.4
       '@nanocollective/nanotune':
-        specifier: ^1.3.4
-        version: 1.3.4
+        specifier: ^1.3.5
+        version: 1.3.5
       '@semantic-release/changelog':
         specifier: ^6.0.3
         version: 6.0.3(semantic-release@24.2.9(typescript@5.9.3))
@@ -348,8 +348,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@nanocollective/nanotune@1.3.4':
-    resolution: {integrity: sha512-JMfJnGkJ5eQjdlqKjO4ziWBKxJrWBrlqZqLxVCAgQwFdB/rGKcW+6W5RLUMq37MLPO5WPoGjR+3VqKaa/Lr1vg==}
+  '@nanocollective/nanotune@1.3.5':
+    resolution: {integrity: sha512-vCSCQJSSTZFRduJGwZsvkt1WiDxbG+TaU2zob7tESZTAsBROC/OdVJztxkpg+j2nuyxY+M524KLWYMfH66DR7Q==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -2357,7 +2357,7 @@ snapshots:
       - encoding
       - supports-color
 
-  '@nanocollective/nanotune@1.3.4':
+  '@nanocollective/nanotune@1.3.5':
     dependencies:
       '@ai-sdk/anthropic': 3.0.58(zod@4.3.6)
       '@ai-sdk/google': 3.0.43(zod@4.3.6)

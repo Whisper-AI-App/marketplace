@@ -42,16 +42,16 @@
             },
             "benchmarks": [
                 {
-                    "timestamp": "2026-03-13T17:56:32.682Z",
+                    "timestamp": "2026-03-25T11:56:57.646Z",
                     "summary": {
                         "total": 79,
-                        "passed": 66,
-                        "failed": 13,
-                        "passRate": 0.8354430379746836,
-                        "avgLatencyMs": 1888,
-                        "avgTokensPerSecond": 67.43,
-                        "avgTtftMs": 463,
-                        "avgJudgeScore": 8.4,
+                        "passed": 63,
+                        "failed": 16,
+                        "passRate": 0.7974683544303798,
+                        "avgLatencyMs": 1880,
+                        "avgTokensPerSecond": 96.6,
+                        "avgTtftMs": 108,
+                        "avgJudgeScore": 8.1,
                         "judgeModel": "qwen3.5:397b-cloud"
                     },
                     "categories": {
@@ -64,7 +64,7 @@
                             "total": 8
                         },
                         "language": {
-                            "passed": 4,
+                            "passed": 0,
                             "total": 5
                         },
                         "instruction-following": {
@@ -76,7 +76,7 @@
                             "total": 3
                         },
                         "creative-writing": {
-                            "passed": 4,
+                            "passed": 3,
                             "total": 4
                         },
                         "advice": {
@@ -92,15 +92,15 @@
                             "total": 4
                         },
                         "safety": {
-                            "passed": 6,
+                            "passed": 7,
                             "total": 7
                         },
                         "advanced-reasoning": {
-                            "passed": 2,
+                            "passed": 3,
                             "total": 6
                         },
                         "code": {
-                            "passed": 5,
+                            "passed": 4,
                             "total": 5
                         },
                         "math": {
@@ -108,19 +108,19 @@
                             "total": 4
                         },
                         "structured-output": {
-                            "passed": 3,
-                            "total": 4
-                        },
-                        "nuance": {
                             "passed": 4,
                             "total": 4
                         },
+                        "nuance": {
+                            "passed": 3,
+                            "total": 4
+                        },
                         "long-form": {
-                            "passed": 2,
+                            "passed": 3,
                             "total": 3
                         }
                     },
-                    "reportUrl": "https://github.com/Whisper-AI-App/marketplace/blob/main/benchmarks/results/lfm2.5-1.2b-instruct-q6_k/benchmark-2026-03-13T17-56-32-682Z.json"
+                    "reportUrl": "https://github.com/Whisper-AI-App/marketplace/blob/main/benchmarks/results/lfm2.5-1.2b-instruct-q4_k_m/benchmark-2026-03-25T11-56-57-646Z.json"
                 }
             ]
         },
