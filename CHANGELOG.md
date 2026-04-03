@@ -1,3 +1,13 @@
+## [9.0.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.5.0...v9.0.0) (2026-04-03)
+
+### ⚠ BREAKING CHANGES
+
+* removed identify information from model cards in preparation for cross-conversation memory
+
+### Features
+
+* removed identify information from model cards in preparation for cross-conversation memory ([05ec2dc](https://github.com/Whisper-AI-App/marketplace/commit/05ec2dc6c854fb57b701129976e3cd3ee9f8399f))
+
 ## [8.5.0](https://github.com/Whisper-AI-App/marketplace/compare/v8.4.0...v8.5.0) (2026-03-25)
 
 ### Features

@@ -1,5 +1,5 @@
 {
-    "version": "8.5.0",
+    "version": "9.0.0",
     "defaultRecommendedCard": "lfm2.5-1.2b-instruct-q4_k_m",
     "cards": {
         "lfm2.5-1.2b-instruct-q4_k_m": {
@@ -10,7 +10,7 @@
             "parametersB": 1.2,
             "ramGB": 1.5,
             "systemMessage": {
-                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+                "template": "You are a private on-device AI chat. Conversations stay on device. Help the user concisely. Today's date is {date_time_string}.",
                 "defaultTemplateValues": {
                     "date_time_string": "2026"
                 }
@@ -132,7 +132,7 @@
             "parametersB": 4,
             "ramGB": 6,
             "systemMessage": {
-                "template": "You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
+                "template": "You are a private on-device AI chat. Conversations stay on device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
                 "defaultTemplateValues": {
                     "date_time_string": "2026"
                 }
