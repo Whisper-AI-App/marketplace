@@ -36,7 +36,7 @@ export interface WhisperLLMCard {
 	parametersB: number; // LLM parameters (billions)
 	ramGB: number; // LLM RAM requirement, in GB
 	systemMessage: {
-		template: string; // `You are a 100% private on-device AI chat called Whisper. Today's date is {date_time_string}`
+		template: string; // `You are a 100% private on-device AI chat. Today's date is {date_time_string}`
 		defaultTemplateValues: Record<string, string>; // If App's lib doesn't support a new template variable, this is used as a fallback.
 	};
 	runtime?: RuntimeConfig; // Optional runtime config for llama.rn inference
@@ -235,7 +235,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 			ramGB: 1.5,
 			systemMessage: {
 				template:
-					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+					"You are a private on-device AI chat. Conversations stay on device. Help the user concisely. Today's date is {date_time_string}.",
 				defaultTemplateValues: {
 					date_time_string: templateVariables.date_time_string.defaultValue,
 				},
@@ -287,7 +287,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 			ramGB: 6,
 			systemMessage: {
 				template:
-					"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
+					"You are a private on-device AI chat. Conversations stay on device. Help the user concisely. Be useful, creative, and accurate. You can see images when the user shares them. Today's date is {date_time_string}.",
 				defaultTemplateValues: {
 					date_time_string: templateVariables.date_time_string.defaultValue,
 				},
@@ -339,7 +339,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 		// 	ramGB: 1.5,
 		// 	systemMessage: {
 		// 		template:
-		// 			"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+		// 			"You are a 100% private on-device AI chat. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
 		// 		defaultTemplateValues: {
 		// 			date_time_string: templateVariables.date_time_string.defaultValue,
 		// 		},
@@ -356,7 +356,7 @@ export const whisperLLMCardsJson: WhisperLLMCardsJSON = {
 		// 	ramGB: 3,
 		// 	systemMessage: {
 		// 		template:
-		// 			"You are a 100% private on-device AI chat called Whisper. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
+		// 			"You are a 100% private on-device AI chat. Conversations stay on the device. Help the user concisly. Be useful, creative, and accurate. Today's date is {date_time_string}.",
 		// 		defaultTemplateValues: {
 		// 			date_time_string: templateVariables.date_time_string.defaultValue,
 		// 		},
